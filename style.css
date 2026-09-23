@@ -179,15 +179,15 @@ button.discord-row.is-copied .discord-username { opacity: 1; visibility: visible
 
 /* Seasonal palettes retain the same typography, spacing, and light/dark preference. */
 :root[data-season="christmas"] { --season-paper-light: #f7f4ee; --season-ink-light: #2b332c; --season-muted-light: #676d61; --season-line-light: #d9dacf; --season-accent-light: #873f43; --season-paper-dark: #19231e; --season-ink-dark: #eef1e7; --season-muted-dark: #acb7a5; --season-line-dark: #39473b; --season-accent-dark: #dfa2a0; }
-:root[data-season="birthday"] { --season-paper-light: #f8f3f6; --season-ink-light: #362c3a; --season-muted-light: #746675; --season-line-light: #e0d5df; --season-accent-light: #81578f; --season-paper-dark: #251d29; --season-ink-dark: #f2eaf4; --season-muted-dark: #baabbe; --season-line-dark: #4a3b4f; --season-accent-dark: #d0addd; }
+:root[data-season="birthday"], :root[data-season="valentine"], :root[data-season="anniversary"] { --season-paper-light: #f8f3f6; --season-ink-light: #362c3a; --season-muted-light: #746675; --season-line-light: #e0d5df; --season-accent-light: #81578f; --season-paper-dark: #251d29; --season-ink-dark: #f2eaf4; --season-muted-dark: #baabbe; --season-line-dark: #4a3b4f; --season-accent-dark: #d0addd; }
 :root[data-season="easter"] { --season-paper-light: #f5f6ed; --season-ink-light: #30372d; --season-muted-light: #66705d; --season-line-light: #d6ddc9; --season-accent-light: #5b7144; --season-paper-dark: #20251c; --season-ink-dark: #eef2e5; --season-muted-dark: #afbba0; --season-line-dark: #404b35; --season-accent-dark: #bed298; }
 :root[data-season="halloween"] { --season-paper-light: #faf3e9; --season-ink-light: #3e3027; --season-muted-light: #79664f; --season-line-light: #e2d4c1; --season-accent-light: #945321; --season-paper-dark: #261f1b; --season-ink-dark: #f6ecdf; --season-muted-dark: #c0ad97; --season-line-dark: #514030; --season-accent-dark: #e5a461; }
-:root[data-season="newyear"] { --season-paper-light: #f8f5ec; --season-ink-light: #383329; --season-muted-light: #736b55; --season-line-light: #dfd8c5; --season-accent-light: #796127; --season-paper-dark: #23221b; --season-ink-dark: #f4efdd; --season-muted-dark: #bcb397; --season-line-dark: #4a4532; --season-accent-dark: #dac17a; }
+:root[data-season="newyear"], :root[data-season="newyearseve"], :root[data-season="vappu"], :root[data-season="catday"], :root[data-season="milestone"] { --season-paper-light: #f8f5ec; --season-ink-light: #383329; --season-muted-light: #736b55; --season-line-light: #dfd8c5; --season-accent-light: #796127; --season-paper-dark: #23221b; --season-ink-dark: #f4efdd; --season-muted-dark: #bcb397; --season-line-dark: #4a4532; --season-accent-dark: #dac17a; }
 @media screen {
-  :root[data-season]:not(.blue-mode) { --paper: var(--season-paper-light); --ink: var(--season-ink-light); --muted: var(--season-muted-light); --line: var(--season-line-light); --accent: var(--season-accent-light); }
+  :root[data-season]:not(.blue-mode):not([data-season="aprilfools"]):not([data-season="friday13"]) { --paper: var(--season-paper-light); --ink: var(--season-ink-light); --muted: var(--season-muted-light); --line: var(--season-line-light); --accent: var(--season-accent-light); }
 }
 @media screen and (prefers-color-scheme: dark) {
-  :root[data-season]:not(.blue-mode) { --paper: var(--season-paper-dark); --ink: var(--season-ink-dark); --muted: var(--season-muted-dark); --line: var(--season-line-dark); --accent: var(--season-accent-dark); }
+  :root[data-season]:not(.blue-mode):not([data-season="aprilfools"]):not([data-season="friday13"]) { --paper: var(--season-paper-dark); --ink: var(--season-ink-dark); --muted: var(--season-muted-dark); --line: var(--season-line-dark); --accent: var(--season-accent-dark); }
 }
 .introduction { position: relative; }
 .season-label { position: absolute; top: 100%; left: 0; margin: 18px 0 0; color: var(--accent); font-size: 11px; line-height: 1.5; letter-spacing: .025em; white-space: nowrap; }
@@ -232,3 +232,10 @@ body:has(.discovery-panel[open]) { overflow: hidden; }
 .season-options button[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 2px 0 var(--accent); }
 @media (hover: hover) { .discovery-panel button:hover { color: var(--accent); } }
 @media print { .discovery-panel { display: none; } }
+
+.vappu-cap { display: none; position: absolute; top: -12px; left: 33%; width: 40%; pointer-events: none; }
+.vappu-cap svg { display: block; width: 100%; }
+:root[data-season="vappu"] .vappu-cap { display: block; }
+.cat-snow { position: absolute; right: 0; top: -52px; width: 100%; height: 30px; color: var(--accent); visibility: hidden; pointer-events: none; }
+.avatar.is-snowing .cat-snow { visibility: visible; }
+@media print { .vappu-cap, .cat-snow { display: none !important; } }

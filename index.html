@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="blue-mode">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -7,8 +7,8 @@
   <meta name="description" content="Find me on GitHub, Ailurus, Steam, and Discord.">
   <meta name="author" content="Jeme">
   <meta name="color-scheme" content="light dark">
-  <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#191a18" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f0f6f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#142225" media="(prefers-color-scheme: dark)">
   <link rel="canonical" href="https://jeme.app/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Jeme">
@@ -57,18 +57,19 @@
     <main id="main">
       <section class="profile" aria-labelledby="name">
         <div class="introduction">
-          <h1 id="name" aria-label="Jeme">Jeme<button class="period" type="button" aria-label="Reveal a paw print" disabled><span class="period-dot" aria-hidden="true">.</span><svg class="paw" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><ellipse cx="7" cy="12" rx="3" ry="4" transform="rotate(-25 7 12)"/><ellipse cx="13" cy="7" rx="3" ry="4"/><ellipse cx="21" cy="7" rx="3" ry="4"/><ellipse cx="27" cy="13" rx="3" ry="4" transform="rotate(25 27 13)"/><path d="M8 24c0-4 5-10 9-10s9 6 9 10c0 6-6 3-9 3s-9 3-9-3Z"/></svg></button></h1>
+          <h1 id="name" aria-label="Jeme">Jeme<button class="period" type="button" tabindex="-1" aria-label="Reveal a paw print" disabled><span class="period-dot" aria-hidden="true">.</span><svg class="paw" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><ellipse cx="7" cy="12" rx="3" ry="4" transform="rotate(-25 7 12)"/><ellipse cx="13" cy="7" rx="3" ry="4"/><ellipse cx="21" cy="7" rx="3" ry="4"/><ellipse cx="27" cy="13" rx="3" ry="4" transform="rotate(25 27 13)"/><path d="M8 24c0-4 5-10 9-10s9 6 9 10c0 6-6 3-9 3s-9 3-9-3Z"/></svg></button></h1>
         </div>
         <div class="avatar">
-          <button class="pet" type="button" aria-label="Pet em" disabled>
+          <button class="pet" type="button" tabindex="-1" aria-label="Pet em" disabled>
             <picture>
-              <source id="blue-avatar" srcset="/assets/avatar-blue.webp" media="not all">
+              <source id="blue-avatar" srcset="/assets/avatar-blue.webp" media="all">
               <source srcset="/assets/avatar-white.webp" media="screen and (prefers-color-scheme: dark)">
               <img src="/assets/avatar-black.webp" width="128" height="128" alt="em" fetchpriority="high">
             </picture>
           </button>
           <span class="cat-message" role="status" aria-live="polite" aria-atomic="true"></span>
           <svg class="cat-cloud" viewBox="0 0 32 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 19h16a5 5 0 0 0 0-10 8 8 0 0 0-15-2A6 6 0 0 0 8 19Z"/></svg>
+          <svg class="cat-snow" viewBox="0 0 100 30" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M15 5v16M8 9l14 8M8 17l14-8M50 1v16M43 5l14 8M43 13l14-8M83 9v16M76 13l14 8M76 21l14-8"/></svg>
           <span class="cat-sleep" aria-hidden="true">z</span>
           <p class="print-surprise">you put the cat on paper.</p>
         </div>
@@ -114,10 +115,12 @@
       <p class="panel-intro">Type a word anywhere on the page.</p>
       <dl class="command-list">
         <div><dt><code>miumau</code></dt><dd>Toggle blue mode.</dd></div>
+        <div><dt><code>jeme</code></dt><dd>Ask em who’s here.</dd></div>
         <div><dt><code>pspsps</code></dt><dd>Wake em.</dd></div>
         <div><dt><code>hello</code> / <code>bye</code></dt><dd>Say a little hello or goodbye.</dd></div>
         <div><dt><code>purr</code> / <code>sit</code> / <code>?</code></dt><dd>See what em has to say.</dd></div>
         <div><dt><code>fetch</code></dt><dd>Let em borrow the dot.</dd></div>
+        <div><dt><code>snow</code></dt><dd>A little first snow. No weather tracking.</dd></div>
         <div><dt><code>rain</code></dt><dd>A small cloud, just for em.</dd></div>
         <div><dt><code>uemaim</code> / <code>uamuim</code></dt><dd>Mirror em for a moment.</dd></div>
         <div><dt><code>seasons</code></dt><dd>Try a seasonal theme.</dd></div>
@@ -135,9 +138,17 @@
         <button type="button" data-preview="halloween"><span>Halloween</span> <small>31 October</small></button>
         <button type="button" data-preview="christmas"><span>Christmas</span> <small>24–26 December</small></button>
         <button type="button" data-preview="newyear"><span>New Year</span> <small>1 January</small></button>
+        <button type="button" data-preview="valentine"><span>Valentine’s Day</span> <small>14 February</small></button>
+        <button type="button" data-preview="aprilfools"><span>April Fools</span> <small>1 April</small></button>
+        <button type="button" data-preview="vappu"><span>Vappu</span> <small>30 April–1 May</small></button>
+        <button type="button" data-preview="catday"><span>International Cat Day</span> <small>8 August</small></button>
+        <button type="button" data-preview="newyearseve"><span>New Year’s Eve</span> <small>31 December</small></button>
+        <button type="button" data-preview="friday13"><span>Friday the 13th</span> <small>A first-pet surprise</small></button>
+        <button type="button" data-preview="anniversary"><span>Site anniversary</span> <small>Preview · date pending</small></button>
+        <button type="button" data-preview="milestone"><span>Personal milestone</span> <small>Preview · dates pending</small></button>
         <button type="button" data-preview="none"><span>Everyday</span> <small>No seasonal theme</small></button>
       </div>
-      <p class="panel-note">Try the birthday candle, the Christmas present, or the egg hidden in the Easter dot. Choosing a theme turns off blue mode.</p>
+      <p class="panel-note">Try the birthday candle, the Christmas present, or the egg hidden in the Easter dot. Seasonal themes use their own palettes. Today’s theme returns to blue on ordinary days.</p>
       <button class="panel-button" type="button" id="browse-commands">All secret commands <span aria-hidden="true">→</span></button>
     </section>
     <p class="panel-hint">Escape to close.</p>

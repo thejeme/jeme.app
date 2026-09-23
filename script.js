@@ -66,6 +66,7 @@ pet.addEventListener('click', () => {
     ], { duration: 340, easing: 'ease-in-out' });
   }
   petCount += 1;
+  if (!window.dispatchEvent(new Event('season-pet', { cancelable: true }))) return;
   const hour = new Date().getHours();
   if (hour < 5 && Math.random() < 0.25) {
     say('still awake?');
@@ -132,14 +133,14 @@ window.addEventListener('keydown', (event) => {
     openDiscoveries(panel);
     return;
   }
-  const replies = { pspsps: '?', hello: 'hi.', bye: 'bye.', purr: 'prrr.', sit: 'no.', '?': '?' };
+  const replies = { jeme: 'that’s me.', pspsps: '?', hello: 'hi.', bye: 'bye.', purr: 'prrr.', sit: 'no.', '?': '?' };
   const greeting = Object.keys(replies).find((word) => secret.endsWith(word));
   if (greeting) {
     secret = '';
     say(replies[greeting]);
     return;
   }
-  const action = ['fetch', 'rain', 'uemaim', 'uamuim'].find((word) => secret.endsWith(word));
+  const action = ['fetch', 'rain', 'snow', 'uemaim', 'uamuim'].find((word) => secret.endsWith(word));
   if (action) {
     secret = '';
     if (action === 'fetch') {
@@ -147,6 +148,9 @@ window.addEventListener('keydown', (event) => {
       period.classList.remove('is-paw');
       briefly(period, 'is-missing');
       say('mine.');
+    } else if (action === 'snow') {
+      briefly(avatar, 'is-snowing');
+      say('first snow.');
     } else if (action === 'rain') {
       briefly(avatar, 'is-raining');
       say('…');
@@ -248,7 +252,7 @@ function openDiscoveries(view) {
   document.getElementById('season-guide').hidden = !seasons;
   document.getElementById('discovery-title').textContent = seasons ? 'A change of season.' : 'A few secrets.';
   const selected = new URLSearchParams(location.search).get('season');
-  const valid = ['birthday', 'easter', 'halloween', 'christmas', 'newyear', 'none'];
+  const valid = [...discoveries.querySelectorAll('[data-preview]')].map((button) => button.dataset.preview);
   for (const button of discoveries.querySelectorAll('[data-preview]')) {
     button.setAttribute('aria-pressed', String(button.dataset.preview === (valid.includes(selected) ? selected : 'today')));
   }

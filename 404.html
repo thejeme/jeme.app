@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="blue-mode">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -7,8 +7,8 @@
   <meta name="description" content="Nothing here. Head back to Jeme’s home page.">
   <meta name="robots" content="noindex, follow">
   <meta name="color-scheme" content="light dark">
-  <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#191a18" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f0f6f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#142225" media="(prefers-color-scheme: dark)">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
@@ -21,6 +21,7 @@
       <div class="profile">
         <h1 aria-label="404 — Page not found">404<span class="error-dot" aria-hidden="true">.</span></h1>
         <picture class="avatar">
+          <source id="blue-avatar" srcset="/assets/avatar-blue.webp" media="all">
           <source srcset="/assets/avatar-white.webp" media="screen and (prefers-color-scheme: dark)">
           <img src="/assets/avatar-black.webp" width="128" height="128" alt="em" fetchpriority="high">
         </picture>

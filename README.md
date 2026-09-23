@@ -16,11 +16,11 @@ Use revalidation (`Cache-Control: no-cache`) for HTML and `sw.js`. When changing
 
 ## Assets
 
-The supplied `assets/miumau-*.png` files are the avatar originals. The page uses 256px WebP derivatives. PNG app icons use the black avatar on the site's light background; the maskable icon adds safe padding. `assets/social.png` is the 1200 × 630 social preview. Update the canonical, social URLs, sitemap, and manifest if the domain changes.
+The supplied `assets/miumau-*.png` files are the avatar originals. The page uses 256px WebP derivatives. PNG app icons use the blue avatar on the site's light blue background; the maskable icon adds safe padding. `assets/social.png` is the 1200 × 630 social preview. Update the canonical, social URLs, sitemap, and manifest if the domain changes.
 
 ## Easter eggs
 
-Click the avatar (or focus it and press Enter/Space) to pet em; every third pet shows “mrrp.” Em gets a small “z” after 60 seconds without activity and wakes on interaction. Type `miumau` outside a text field to toggle the blue avatar and palette for the current visit. The developer console has a small greeting. All effects are silent, respect reduced motion, and work offline after the first visit.
+Click the avatar (or focus it and press Enter/Space) to pet em; every third pet shows “mrrp.” Em gets a small “z” after 60 seconds without activity and wakes on interaction. Blue is the default on ordinary days. Type `miumau` outside a text field to toggle between blue and the neutral/seasonal palette for the current visit. Type `jeme` for “that’s me.” The developer console has a small greeting. All effects are silent, respect reduced motion, and work offline after the first visit.
 
 The Discord row copies `thejeme` through the browser clipboard API. If clipboard access fails, or JavaScript is unavailable, it provides a selectable username. No third-party profile or clipboard service is used.
 
@@ -46,4 +46,4 @@ Preview with `/?season=christmas`, `/?season=birthday`, `/?season=easter`, `/?se
 
 On the homepage, the birthday ornament is a candle you can blow out (“wish made.”), and the Christmas ornament opens into a fish (“for me?”). During Easter, find the patterned egg hidden in the name’s dot (“found it.”). All three work with pointer or keyboard activation. Discoveries persist for the current browser tab’s session, separately for each year; if storage is unavailable, they last until reload. The 404 page keeps decorative ornaments.
 
-Type `help` to open a compact command guide or `seasons` to open the seasonal picker. Native dialogs support keyboard focus, a close button, and Escape. Choosing a season updates the preview URL without reloading. “Today’s theme” removes the override and follows the local date again; “Everyday” explicitly turns seasonal styling off. Either selection restores the standard avatar if blue mode was on.
+Type `help` to open a compact command guide or `seasons` to open the seasonal picker. Native dialogs support keyboard focus, a close button, and Escape. Choosing a season updates the preview URL without reloading. “Today’s theme” removes the override and follows the local date again; “Everyday” explicitly turns seasonal styling off. Selecting a season restores its neutral avatar and seasonal colors. “Today’s theme” and “Everyday” restore blue on ordinary days.
