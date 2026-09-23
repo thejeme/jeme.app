@@ -35,6 +35,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
   <link rel="stylesheet" href="/style.css">
+  <script src="/seasons.js" defer></script>
   <script src="/script.js" defer></script>
   <script type="application/ld+json">
     {
@@ -104,5 +105,42 @@
       </nav>
     </main>
   </div>
+  <dialog class="discovery-panel" id="discoveries" aria-labelledby="discovery-title">
+    <div class="discovery-header">
+      <h2 id="discovery-title">A few secrets.</h2>
+      <button class="panel-close" type="button" aria-label="Close discoveries" autofocus>×</button>
+    </div>
+    <section id="command-guide" aria-label="Secret commands">
+      <p class="panel-intro">Type a word anywhere on the page.</p>
+      <dl class="command-list">
+        <div><dt><code>miumau</code></dt><dd>Toggle blue mode.</dd></div>
+        <div><dt><code>pspsps</code></dt><dd>Wake em.</dd></div>
+        <div><dt><code>hello</code> / <code>bye</code></dt><dd>Say a little hello or goodbye.</dd></div>
+        <div><dt><code>purr</code> / <code>sit</code> / <code>?</code></dt><dd>See what em has to say.</dd></div>
+        <div><dt><code>fetch</code></dt><dd>Let em borrow the dot.</dd></div>
+        <div><dt><code>rain</code></dt><dd>A small cloud, just for em.</dd></div>
+        <div><dt><code>uemaim</code> / <code>uamuim</code></dt><dd>Mirror em for a moment.</dd></div>
+        <div><dt><code>seasons</code></dt><dd>Try a seasonal theme.</dd></div>
+        <div><dt><code>help</code></dt><dd>Come back here.</dd></div>
+      </dl>
+      <p class="panel-note">Pet em, linger with your mouse, or double-click the dot. There are surprises after a nap, late at night, on special dates, and even on paper.</p>
+      <button class="panel-button" type="button" id="browse-seasons">Explore seasons <span aria-hidden="true">→</span></button>
+    </section>
+    <section id="season-guide" aria-label="Season previews" hidden>
+      <p class="panel-intro">A different mood. The same cat.</p>
+      <div class="season-options">
+        <button type="button" data-preview="today"><span>Today’s theme</span> <small>Follow the local date</small></button>
+        <button type="button" data-preview="birthday"><span>Birthday</span> <small>17 March</small></button>
+        <button type="button" data-preview="easter"><span>Easter</span> <small>Good Friday–Easter Monday</small></button>
+        <button type="button" data-preview="halloween"><span>Halloween</span> <small>31 October</small></button>
+        <button type="button" data-preview="christmas"><span>Christmas</span> <small>24–26 December</small></button>
+        <button type="button" data-preview="newyear"><span>New Year</span> <small>1 January</small></button>
+        <button type="button" data-preview="none"><span>Everyday</span> <small>No seasonal theme</small></button>
+      </div>
+      <p class="panel-note">Try the birthday candle, the Christmas present, or the egg hidden in the Easter dot. Choosing a theme turns off blue mode.</p>
+      <button class="panel-button" type="button" id="browse-commands">All secret commands <span aria-hidden="true">→</span></button>
+    </section>
+    <p class="panel-hint">Escape to close.</p>
+  </dialog>
 </body>
 </html>

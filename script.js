@@ -50,6 +50,8 @@ function say(text) {
   messageTimer = setTimeout(() => avatar.classList.remove('is-speaking'), 2400);
 }
 
+window.addEventListener('season-reply', (event) => say(event.detail));
+
 pet.disabled = false;
 pet.addEventListener('click', () => {
   clearTimeout(hoverTimer);
@@ -68,7 +70,7 @@ pet.addEventListener('click', () => {
   if (hour < 5 && Math.random() < 0.25) {
     say('still awake?');
   } else if (petCount % 3 === 0) {
-    say('mrrp.');
+    say(document.documentElement.dataset.seasonReply || 'mrrp.');
   }
 });
 reducedMotion.addEventListener('change', () => {
@@ -108,10 +110,8 @@ wake();
 
 let secret = '';
 let lastKey = 0;
-const themeColors = [...document.querySelectorAll('meta[name="theme-color"]')]
-  .map((meta) => ({ meta, original: meta.content }));
-
 window.addEventListener('keydown', (event) => {
+  if (document.getElementById('discoveries').open) { secret = ''; return; }
   // Never intercept shortcuts, composed text, or typing into form fields.
   if (event.ctrlKey || event.metaKey || event.altKey || event.isComposing ||
       event.target.closest('input, textarea, select, [contenteditable]:not([contenteditable="false"])')) {
@@ -125,7 +125,13 @@ window.addEventListener('keydown', (event) => {
   }
   if (Date.now() - lastKey > 2000) secret = '';
   lastKey = Date.now();
-  secret = (secret + event.key.toLowerCase()).slice(-6);
+  secret = (secret + event.key.toLowerCase()).slice(-7);
+  const panel = ['help', 'seasons'].find((word) => secret.endsWith(word));
+  if (panel) {
+    secret = '';
+    openDiscoveries(panel);
+    return;
+  }
   const replies = { pspsps: '?', hello: 'hi.', bye: 'bye.', purr: 'prrr.', sit: 'no.', '?': '?' };
   const greeting = Object.keys(replies).find((word) => secret.endsWith(word));
   if (greeting) {
@@ -149,13 +155,11 @@ window.addEventListener('keydown', (event) => {
     }
     return;
   }
-  if (secret !== 'miumau') return;
+  if (!secret.endsWith('miumau')) return;
   secret = '';
   const blue = document.documentElement.classList.toggle('blue-mode');
   document.getElementById('blue-avatar').media = blue ? 'all' : 'not all';
-  for (const { meta, original } of themeColors) {
-    meta.content = blue ? (meta.media.includes('dark') ? '#142225' : '#f0f6f7') : original;
-  }
+  window.dispatchEvent(new Event('themechange'));
 });
 
 // Keep a selectable username when JavaScript or the clipboard is unavailable.
@@ -205,6 +209,10 @@ if (navigator.clipboard?.writeText && window.isSecureContext) {
 const period = document.querySelector('.period');
 let pawTimer;
 function revealPaw() {
+  if (document.documentElement.dataset.season === 'easter' && !document.documentElement.classList.contains('egg-found')) {
+    window.dispatchEvent(new Event('season-egg'));
+    return;
+  }
   clearTimeout(pawTimer);
   period.classList.remove('is-missing');
   period.classList.add('is-paw');
@@ -214,7 +222,10 @@ period.disabled = false;
 period.addEventListener('dblclick', revealPaw);
 // Native button activation gives keyboard and assistive-tech users the same discovery.
 period.addEventListener('click', (event) => {
-  if (event.detail === 0) revealPaw();
+  if (document.documentElement.dataset.season === 'easter' && !document.documentElement.classList.contains('egg-found')) {
+    period.classList.remove('is-missing', 'is-paw');
+    window.dispatchEvent(new Event('season-egg'));
+  } else if (event.detail === 0) revealPaw();
 });
 
 
@@ -228,3 +239,43 @@ function briefly(element, className) {
     effectTimers.delete(className);
   }, 2400));
 }
+
+
+const discoveries = document.getElementById('discoveries');
+function openDiscoveries(view) {
+  const seasons = view === 'seasons';
+  document.getElementById('command-guide').hidden = seasons;
+  document.getElementById('season-guide').hidden = !seasons;
+  document.getElementById('discovery-title').textContent = seasons ? 'A change of season.' : 'A few secrets.';
+  const selected = new URLSearchParams(location.search).get('season');
+  const valid = ['birthday', 'easter', 'halloween', 'christmas', 'newyear', 'none'];
+  for (const button of discoveries.querySelectorAll('[data-preview]')) {
+    button.setAttribute('aria-pressed', String(button.dataset.preview === (valid.includes(selected) ? selected : 'today')));
+  }
+  if (!discoveries.open) discoveries.showModal();
+  else discoveries.querySelector('.panel-close').focus();
+}
+discoveries.querySelector('.panel-close').addEventListener('click', () => discoveries.close());
+discoveries.addEventListener('cancel', () => { secret = ''; });
+document.getElementById('browse-seasons').addEventListener('click', () => openDiscoveries('seasons'));
+document.getElementById('browse-commands').addEventListener('click', () => openDiscoveries('help'));
+for (const button of discoveries.querySelectorAll('[data-preview]')) {
+  button.addEventListener('click', () => {
+    window.dispatchEvent(new CustomEvent('season-preview', { detail: button.dataset.preview }));
+    discoveries.close();
+  });
+}
+// Keep Tab cycling inside the panel rather than moving into browser chrome.
+discoveries.addEventListener('keydown', (event) => {
+  if (event.key !== 'Tab') return;
+  const buttons = [...discoveries.querySelectorAll('button')].filter((button) => !button.disabled && button.getClientRects().length);
+  const first = buttons[0];
+  const last = buttons[buttons.length - 1];
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
+});

@@ -31,3 +31,19 @@ Type `fetch` to let em borrow the dot (“mine.”), `purr` for “prrr.”, `ra
 ## Not-found page
 
 `404.html` shares the home page’s styles and avatars, works without JavaScript, and is excluded from search indexing. Netlify automatically serves this root-level file for missing paths with HTTP status 404; no redirect rule is needed. On other hosts, configure the error document to `/404.html` while preserving the 404 status. Python’s simple preview server does not route missing paths to custom error pages; open `/404.html` to preview the design.
+
+## Seasonal discoveries
+
+Seasonal colors, an ornament beside em, and a small date label follow the visitor’s local calendar. The normal layout stays unchanged. Every third pet uses a seasonal reply; nighttime and other secret replies still work.
+
+- Christmas: December 24–26 (Christmas Eve on the 24th).
+- Birthday: March 17.
+- Easter: Good Friday through Easter Monday, using Gregorian Easter calculated each year with the US Naval Observatory’s published algorithm: <https://aa.usno.navy.mil/faq/easter>.
+- Halloween: October 31.
+- New Year: January 1.
+
+Preview with `/?season=christmas`, `/?season=birthday`, `/?season=easter`, `/?season=halloween`, or `/?season=newyear`. Use `/?season=none` for the ordinary design. Preview overrides last only for that URL. Both color schemes and the 404 page support the seasonal colors. Blue mode temporarily takes priority, then restores the seasonal palette. Dates refresh at local midnight and when returning to the tab. The calendar runs locally, works offline, and makes no external requests.
+
+On the homepage, the birthday ornament is a candle you can blow out (“wish made.”), and the Christmas ornament opens into a fish (“for me?”). During Easter, find the patterned egg hidden in the name’s dot (“found it.”). All three work with pointer or keyboard activation. Discoveries persist for the current browser tab’s session, separately for each year; if storage is unavailable, they last until reload. The 404 page keeps decorative ornaments.
+
+Type `help` to open a compact command guide or `seasons` to open the seasonal picker. Native dialogs support keyboard focus, a close button, and Escape. Choosing a season updates the preview URL without reloading. “Today’s theme” removes the override and follows the local date again; “Everyday” explicitly turns seasonal styling off. Either selection restores the standard avatar if blue mode was on.
