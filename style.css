@@ -52,12 +52,19 @@ a, .discord-row {
   padding: 18px 4px;
   color: inherit;
   text-decoration: none;
-  transition: background-color 160ms ease, padding 160ms ease;
+  transition: color 160ms ease;
 }
 .link-name { font-size: 22px; letter-spacing: -.035em; }
+.link-name, .home-link > span { position: relative; }
+a .link-name::after, button.discord-row .link-name::after, .home-link > span::after {
+  content: ""; position: absolute; inset: auto 0 -5px; height: 1px; background: var(--accent);
+  transform: scaleX(0); transform-origin: left; transition: transform 180ms ease;
+}
+a:focus-visible .link-name::after, button.discord-row:focus-visible .link-name::after, .home-link:focus-visible > span::after { transform: scaleX(1); }
 a:focus-visible, .pet:focus-visible, .period:focus-visible, .discord-row:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; border-radius: 1px; }
 @media (hover: hover) {
-  a:hover, button.discord-row:hover { background: var(--hover); padding-inline: 12px; }
+  a:hover, button.discord-row:hover { color: var(--accent); }
+  a:hover .link-name::after, button.discord-row:hover .link-name::after, .home-link:hover > span::after { transform: scaleX(1); }
 }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
 
@@ -99,7 +106,7 @@ a:focus-visible, .pet:focus-visible, .period:focus-visible, .discord-row:focus-v
 .pet:disabled { cursor: default; }
 .pet picture { display: block; }
 .cat-message, .cat-sleep { position: absolute; right: 0; top: -20px; font-size: 12px; line-height: 1; color: var(--muted); pointer-events: none; opacity: 0; transition: opacity 160ms ease; }
-.cat-message { right: 8px; }
+.cat-message { right: 0; top: -26px; width: max(100%, 128px); text-align: center; line-height: 1.5; }
 .cat-sleep { font-family: Georgia, serif; font-style: italic; }
 .avatar.is-speaking .cat-message, .avatar.is-sleeping .cat-sleep { opacity: 1; }
 :root.blue-mode { --paper: #f0f6f7; --ink: #203537; --muted: #536d71; --line: #ccdfe1; --hover: #e4eff1; --accent: #24727c; }
@@ -131,7 +138,7 @@ div.discord-row .discord-username { user-select: all; }
 }
 
 .period.is-missing .period-dot, .period.is-missing .paw { visibility: hidden; }
-.cat-cloud { position: absolute; top: -28px; left: 8px; width: 28px; height: 21px; color: var(--muted); visibility: hidden; pointer-events: none; }
+.cat-cloud { position: absolute; top: -50px; left: 8px; width: 28px; height: 21px; color: var(--muted); visibility: hidden; pointer-events: none; }
 .avatar.is-raining .cat-cloud { visibility: visible; }
 .avatar.is-mirrored .pet picture { transform: scaleX(-1); }
 @media print {
@@ -149,4 +156,23 @@ div.discord-row .discord-username { user-select: all; }
 .home-link svg { color: var(--muted); flex-shrink: 0; }
 @media print {
   .home-link svg { display: none; }
+}
+
+/* One short entrance, with all content usable from the first frame. */
+@media screen and (prefers-reduced-motion: no-preference) {
+  main { animation: arrive 250ms ease-out; }
+  main:focus-within { animation: none; }
+}
+@keyframes arrive {
+  from { opacity: .65; transform: translateY(3px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+button.discord-row .discord-username {
+  display: inline-flex; align-items: center; gap: 6px; color: var(--accent);
+  opacity: 0; visibility: hidden; transition: opacity 160ms ease, visibility 0s linear 160ms;
+}
+button.discord-row.is-copied .discord-username { opacity: 1; visibility: visible; transition-delay: 0s; }
+.copy-check { font-size: 14px; line-height: 1; }
+@media print {
+  .link-name::after, .home-link > span::after { display: none; }
 }

@@ -19,6 +19,7 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 let petCount = 0;
 let tilt;
 let messageTimer;
+let replyAnimation;
 let sleepTimer;
 let hoverTimer;
 let hiddenSince = document.hidden ? Date.now() : null;
@@ -39,6 +40,13 @@ function say(text) {
   clearTimeout(messageTimer);
   message.replaceChildren(document.createTextNode(text));
   avatar.classList.add('is-speaking');
+  replyAnimation?.cancel();
+  if (!reducedMotion.matches) {
+    replyAnimation = message.animate([
+      { opacity: 0.45, transform: 'translateY(2px)' },
+      { opacity: 1, transform: 'translateY(0)' },
+    ], { duration: 160, easing: 'ease-out' });
+  }
   messageTimer = setTimeout(() => avatar.classList.remove('is-speaking'), 2400);
 }
 
@@ -64,7 +72,10 @@ pet.addEventListener('click', () => {
   }
 });
 reducedMotion.addEventListener('change', () => {
-  if (reducedMotion.matches) tilt?.cancel();
+  if (reducedMotion.matches) {
+    tilt?.cancel();
+    replyAnimation?.cancel();
+  }
 });
 
 for (const type of ['pointermove', 'pointerdown', 'keydown', 'scroll', 'focusin']) {
@@ -157,7 +168,12 @@ if (navigator.clipboard?.writeText && window.isSecureContext) {
   copyDiscord.setAttribute('aria-label', 'Discord: copy username thejeme');
   copyDiscord.title = 'Copy Discord username';
   copyDiscord.append(...[...discordContact.children].map((child) => child.cloneNode(true)));
-  copyDiscord.querySelector('.discord-username').textContent = '';
+  const confirmation = copyDiscord.querySelector('.discord-username');
+  const check = document.createElement('span');
+  check.className = 'copy-check';
+  check.textContent = '✓';
+  confirmation.setAttribute('aria-hidden', 'true');
+  confirmation.replaceChildren(check, document.createTextNode('Copied'));
   discordContact.replaceWith(copyDiscord);
   let copying = false;
   let copiedTimer;
@@ -167,10 +183,10 @@ if (navigator.clipboard?.writeText && window.isSecureContext) {
     clearTimeout(copiedTimer);
     try {
       await navigator.clipboard.writeText('thejeme');
-      copyDiscord.querySelector('.discord-username').textContent = 'Copied';
+      copyDiscord.classList.add('is-copied');
       discordStatus.textContent = 'Discord username thejeme copied. Paste it into Add Friend in Discord.';
       copiedTimer = setTimeout(() => {
-        copyDiscord.querySelector('.discord-username').textContent = '';
+        copyDiscord.classList.remove('is-copied');
         discordStatus.textContent = '';
       }, 2400);
     } catch {
