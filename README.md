@@ -17,3 +17,9 @@ Use revalidation (`Cache-Control: no-cache`) for HTML and `sw.js`. When changing
 ## Assets
 
 The supplied `assets/miumau-*.png` files are the avatar originals. The page uses 256px WebP derivatives. PNG app icons use the black avatar on the site's light background; the maskable icon adds safe padding. `assets/social.png` is the 1200 × 630 social preview. Update the canonical, social URLs, sitemap, and manifest if the domain changes.
+
+## Easter eggs
+
+Click the avatar (or focus it and press Enter/Space) to pet em; every third pet shows “mrrp.” Em gets a small “z” after 60 seconds without activity and wakes on interaction. Type `miumau` outside a text field to toggle the blue avatar and palette for the current visit. The developer console has a small greeting. All effects are silent, respect reduced motion, and work offline after the first visit.
+
+The Discord row copies `thejeme` through the browser clipboard API. If clipboard access fails, or JavaScript is unavailable, it provides a selectable username. No third-party profile or clipboard service is used.

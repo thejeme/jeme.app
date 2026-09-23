@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Jeme</title>
-  <meta name="description" content="Find me on GitHub, Ailurus, and Steam.">
+  <meta name="description" content="Find me on GitHub, Ailurus, Steam, and Discord.">
   <meta name="author" content="Jeme">
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
@@ -14,7 +14,7 @@
   <meta property="og:site_name" content="Jeme">
   <meta property="og:locale" content="en_US">
   <meta property="og:title" content="Jeme">
-  <meta property="og:description" content="Find me on GitHub, Ailurus, and Steam.">
+  <meta property="og:description" content="Find me on GitHub, Ailurus, Steam, and Discord.">
   <meta property="og:url" content="https://jeme.app/">
   <meta property="og:image" content="https://jeme.app/assets/social.png">
   <meta property="og:image:type" content="image/png">
@@ -23,7 +23,7 @@
   <meta property="og:image:alt" content="Jeme with em.">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Jeme">
-  <meta name="twitter:description" content="Find me on GitHub, Ailurus, and Steam.">
+  <meta name="twitter:description" content="Find me on GitHub, Ailurus, Steam, and Discord.">
   <meta name="twitter:image" content="https://jeme.app/assets/social.png">
   <meta name="twitter:image:alt" content="Jeme with em.">
   <meta name="twitter:creator" content="@TheJeme">
@@ -59,10 +59,17 @@
         <div class="introduction">
           <h1 id="name">Jeme<span class="period">.</span></h1>
         </div>
-        <picture class="avatar">
-          <source srcset="/assets/avatar-white.webp" media="(prefers-color-scheme: dark)">
-          <img src="/assets/avatar-black.webp" width="128" height="128" alt="em" fetchpriority="high">
-        </picture>
+        <div class="avatar">
+          <button class="pet" type="button" aria-label="Pet em" disabled>
+            <picture>
+              <source id="blue-avatar" srcset="/assets/avatar-blue.webp" media="not all">
+              <source srcset="/assets/avatar-white.webp" media="(prefers-color-scheme: dark)">
+              <img src="/assets/avatar-black.webp" width="128" height="128" alt="em" fetchpriority="high">
+            </picture>
+          </button>
+          <span class="cat-message" role="status" aria-live="polite" aria-atomic="true"></span>
+          <span class="cat-sleep" aria-hidden="true">z</span>
+        </div>
       </section>
       <nav class="links" aria-labelledby="links-heading">
         <h2 id="links-heading">Find me online</h2>
@@ -84,6 +91,13 @@
               <span class="link-name">Steam</span>
               <span class="sr-only"> (opens in a new tab)</span>
             </a>
+          </li>
+          <li>
+            <div class="discord-row" id="discord-contact">
+              <span class="link-name">Discord</span>
+              <span class="discord-username">thejeme</span>
+            </div>
+            <p class="sr-only" id="discord-status" role="status" aria-live="polite"></p>
           </li>
         </ul>
       </nav>
