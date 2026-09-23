@@ -53,22 +53,23 @@
 </head>
 <body>
   <div class="page">
-    <header class="masthead"><span>jeme.app</span></header>
     <main id="main">
       <section class="profile" aria-labelledby="name">
         <div class="introduction">
-          <h1 id="name">Jeme<span class="period">.</span></h1>
+          <h1 id="name" aria-label="Jeme">Jeme<button class="period" type="button" aria-label="Reveal a paw print" disabled><span class="period-dot" aria-hidden="true">.</span><svg class="paw" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><ellipse cx="7" cy="12" rx="3" ry="4" transform="rotate(-25 7 12)"/><ellipse cx="13" cy="7" rx="3" ry="4"/><ellipse cx="21" cy="7" rx="3" ry="4"/><ellipse cx="27" cy="13" rx="3" ry="4" transform="rotate(25 27 13)"/><path d="M8 24c0-4 5-10 9-10s9 6 9 10c0 6-6 3-9 3s-9 3-9-3Z"/></svg></button></h1>
         </div>
         <div class="avatar">
           <button class="pet" type="button" aria-label="Pet em" disabled>
             <picture>
               <source id="blue-avatar" srcset="/assets/avatar-blue.webp" media="not all">
-              <source srcset="/assets/avatar-white.webp" media="(prefers-color-scheme: dark)">
+              <source srcset="/assets/avatar-white.webp" media="screen and (prefers-color-scheme: dark)">
               <img src="/assets/avatar-black.webp" width="128" height="128" alt="em" fetchpriority="high">
             </picture>
           </button>
           <span class="cat-message" role="status" aria-live="polite" aria-atomic="true"></span>
+          <svg class="cat-cloud" viewBox="0 0 32 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 19h16a5 5 0 0 0 0-10 8 8 0 0 0-15-2A6 6 0 0 0 8 19Z"/></svg>
           <span class="cat-sleep" aria-hidden="true">z</span>
+          <p class="print-surprise">you put the cat on paper.</p>
         </div>
       </section>
       <nav class="links" aria-labelledby="links-heading">

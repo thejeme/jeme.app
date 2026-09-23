@@ -27,11 +27,6 @@ body { margin: 0; }
   flex-direction: column;
 }
 
-.masthead {
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: -.02em;
-}
 
 main { padding-block: 88px 96px; margin-block: auto; }
 .profile { display: flex; justify-content: space-between; align-items: center; gap: 32px; }
@@ -60,7 +55,7 @@ a, .discord-row {
   transition: background-color 160ms ease, padding 160ms ease;
 }
 .link-name { font-size: 22px; letter-spacing: -.035em; }
-a:focus-visible, .pet:focus-visible, .discord-row:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; border-radius: 1px; }
+a:focus-visible, .pet:focus-visible, .period:focus-visible, .discord-row:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; border-radius: 1px; }
 @media (hover: hover) {
   a:hover, button.discord-row:hover { background: var(--hover); padding-inline: 12px; }
 }
@@ -121,3 +116,37 @@ button.discord-row { cursor: copy; }
 .discord-username { color: var(--muted); font-size: 13px; }
 div.discord-row .discord-username { user-select: all; }
 .discord-feedback { margin: -8px 4px 18px; color: var(--muted); font-size: 12px; line-height: 1.5; }
+
+.period { position: relative; min-width: 24px; padding: 0; border: 0; background: none; font: inherit; letter-spacing: inherit; cursor: pointer; touch-action: manipulation; }
+.period:disabled { cursor: default; }
+.paw { position: absolute; bottom: .05em; left: 50%; width: .25em; height: .25em; transform: translateX(-50%); fill: currentColor; visibility: hidden; }
+.period.is-paw .period-dot { visibility: hidden; }
+.period.is-paw .paw { visibility: visible; }
+.cat-message { white-space: nowrap; }
+.print-surprise { display: none; }
+@media print {
+  :root, :root.blue-mode { --paper: white; --ink: black; --muted: #444; --line: #ccc; }
+  .print-surprise { display: block; margin: 8px 0 0; font: 11px/1.5 Georgia, serif; text-align: center; color: #444; }
+  .pet { transform: none !important; }
+}
+
+.period.is-missing .period-dot, .period.is-missing .paw { visibility: hidden; }
+.cat-cloud { position: absolute; top: -28px; left: 8px; width: 28px; height: 21px; color: var(--muted); visibility: hidden; pointer-events: none; }
+.avatar.is-raining .cat-cloud { visibility: visible; }
+.avatar.is-mirrored .pet picture { transform: scaleX(-1); }
+@media print {
+  .cat-cloud { display: none; }
+  .avatar.is-mirrored .pet picture { transform: none; }
+  .period.is-missing .period-dot { visibility: visible; }
+}
+
+.not-found h1 { font-size: clamp(88px, 14vw, 144px); }
+.error-dot { color: var(--accent); }
+.error-copy { margin-block: 40px 44px; }
+.error-copy h2 { margin: 0 0 12px; color: var(--ink); font-size: 24px; font-weight: 400; letter-spacing: -.035em; text-transform: none; }
+.error-copy p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+.home-link { justify-content: space-between; gap: 24px; border-block: 1px solid var(--line); font-size: 16px; }
+.home-link svg { color: var(--muted); flex-shrink: 0; }
+@media print {
+  .home-link svg { display: none; }
+}

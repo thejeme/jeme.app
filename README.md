@@ -23,3 +23,11 @@ The supplied `assets/miumau-*.png` files are the avatar originals. The page uses
 Click the avatar (or focus it and press Enter/Space) to pet em; every third pet shows “mrrp.” Em gets a small “z” after 60 seconds without activity and wakes on interaction. Type `miumau` outside a text field to toggle the blue avatar and palette for the current visit. The developer console has a small greeting. All effects are silent, respect reduced motion, and work offline after the first visit.
 
 The Discord row copies `thejeme` through the browser clipboard API. If clipboard access fails, or JavaScript is unavailable, it provides a selectable username. No third-party profile or clipboard service is used.
+
+More discoveries: `pspsps` wakes em with “?”, `hello` gets “hi.”, and `bye` gets “bye.” Between midnight and 5 a.m. in the visitor’s local time, each pet has a 25% chance of getting “still awake?”. Double-click the name’s dot (or focus it and press Enter/Space) for a brief paw print. Printing reveals “you put the cat on paper.” beneath em.
+
+Type `fetch` to let em borrow the dot (“mine.”), `purr` for “prrr.”, `rain` for a tiny cloud and “…”, `sit` for “no.”, or `?` for “?”. `uemaim` (or `uamuim`, the actual reverse of `miumau`) briefly mirrors em. Hover with a mouse for four seconds without petting for “yes?”. Returning after the tab has been hidden for at least five minutes gets “oh. you.” Temporary visual effects reset after 2.4 seconds without changing layout.
+
+## Not-found page
+
+`404.html` shares the home page’s styles and avatars, works without JavaScript, and is excluded from search indexing. Netlify automatically serves this root-level file for missing paths with HTTP status 404; no redirect rule is needed. On other hosts, configure the error document to `/404.html` while preserving the 404 status. Python’s simple preview server does not route missing paths to custom error pages; open `/404.html` to preview the design.

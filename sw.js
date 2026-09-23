@@ -1,5 +1,5 @@
-const CACHE = 'jeme-v5';
-const SHELL = ['/', '/index.html', '/style.css', '/script.js', '/site.webmanifest',
+const CACHE = 'jeme-v10';
+const SHELL = ['/', '/index.html', '/404.html', '/style.css', '/script.js', '/site.webmanifest',
   '/assets/avatar-blue.webp', '/assets/avatar-black.webp', '/assets/avatar-white.webp', '/assets/favicon.png',
   '/assets/apple-touch-icon.png', '/assets/icon-192.png', '/assets/icon-512.png',
   '/assets/icon-maskable.png'];

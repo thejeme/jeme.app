@@ -20,6 +20,8 @@ let petCount = 0;
 let tilt;
 let messageTimer;
 let sleepTimer;
+let hoverTimer;
+let hiddenSince = document.hidden ? Date.now() : null;
 
 function wake() {
   avatar.classList.remove('is-sleeping');
@@ -32,8 +34,17 @@ function wake() {
   }
 }
 
+function say(text) {
+  wake();
+  clearTimeout(messageTimer);
+  message.replaceChildren(document.createTextNode(text));
+  avatar.classList.add('is-speaking');
+  messageTimer = setTimeout(() => avatar.classList.remove('is-speaking'), 2400);
+}
+
 pet.disabled = false;
 pet.addEventListener('click', () => {
+  clearTimeout(hoverTimer);
   wake();
   tilt?.cancel();
   if (!reducedMotion.matches) {
@@ -45,11 +56,11 @@ pet.addEventListener('click', () => {
     ], { duration: 340, easing: 'ease-in-out' });
   }
   petCount += 1;
-  if (petCount % 3 === 0) {
-    clearTimeout(messageTimer);
-    message.replaceChildren(document.createTextNode('mrrp.'));
-    avatar.classList.add('is-speaking');
-    messageTimer = setTimeout(() => avatar.classList.remove('is-speaking'), 2400);
+  const hour = new Date().getHours();
+  if (hour < 5 && Math.random() < 0.25) {
+    say('still awake?');
+  } else if (petCount % 3 === 0) {
+    say('mrrp.');
   }
 });
 reducedMotion.addEventListener('change', () => {
@@ -59,7 +70,29 @@ reducedMotion.addEventListener('change', () => {
 for (const type of ['pointermove', 'pointerdown', 'keydown', 'scroll', 'focusin']) {
   window.addEventListener(type, wake, { passive: true });
 }
-document.addEventListener('visibilitychange', wake);
+document.addEventListener('visibilitychange', () => {
+  clearTimeout(hoverTimer);
+  if (document.hidden) {
+    hiddenSince = Date.now();
+    wake();
+    return;
+  }
+  const away = hiddenSince === null ? 0 : Date.now() - hiddenSince;
+  hiddenSince = null;
+  wake();
+  if (away >= 5 * 60_000) say('oh. you.');
+});
+
+pet.addEventListener('pointerenter', (event) => {
+  if (event.pointerType !== 'mouse') return;
+  clearTimeout(hoverTimer);
+  hoverTimer = setTimeout(() => {
+    if (!document.hidden) say('yes?');
+  }, 4000);
+});
+for (const type of ['pointerleave', 'pointerdown', 'pointercancel']) {
+  pet.addEventListener(type, () => clearTimeout(hoverTimer));
+}
 wake();
 
 let secret = '';
@@ -82,6 +115,29 @@ window.addEventListener('keydown', (event) => {
   if (Date.now() - lastKey > 2000) secret = '';
   lastKey = Date.now();
   secret = (secret + event.key.toLowerCase()).slice(-6);
+  const replies = { pspsps: '?', hello: 'hi.', bye: 'bye.', purr: 'prrr.', sit: 'no.', '?': '?' };
+  const greeting = Object.keys(replies).find((word) => secret.endsWith(word));
+  if (greeting) {
+    secret = '';
+    say(replies[greeting]);
+    return;
+  }
+  const action = ['fetch', 'rain', 'uemaim', 'uamuim'].find((word) => secret.endsWith(word));
+  if (action) {
+    secret = '';
+    if (action === 'fetch') {
+      clearTimeout(pawTimer);
+      period.classList.remove('is-paw');
+      briefly(period, 'is-missing');
+      say('mine.');
+    } else if (action === 'rain') {
+      briefly(avatar, 'is-raining');
+      say('…');
+    } else {
+      briefly(avatar, 'is-mirrored');
+    }
+    return;
+  }
   if (secret !== 'miumau') return;
   secret = '';
   const blue = document.documentElement.classList.toggle('blue-mode');
@@ -101,6 +157,7 @@ if (navigator.clipboard?.writeText && window.isSecureContext) {
   copyDiscord.setAttribute('aria-label', 'Discord: copy username thejeme');
   copyDiscord.title = 'Copy Discord username';
   copyDiscord.append(...[...discordContact.children].map((child) => child.cloneNode(true)));
+  copyDiscord.querySelector('.discord-username').textContent = '';
   discordContact.replaceWith(copyDiscord);
   let copying = false;
   let copiedTimer;
@@ -113,7 +170,7 @@ if (navigator.clipboard?.writeText && window.isSecureContext) {
       copyDiscord.querySelector('.discord-username').textContent = 'Copied';
       discordStatus.textContent = 'Discord username thejeme copied. Paste it into Add Friend in Discord.';
       copiedTimer = setTimeout(() => {
-        copyDiscord.querySelector('.discord-username').textContent = 'thejeme';
+        copyDiscord.querySelector('.discord-username').textContent = '';
         discordStatus.textContent = '';
       }, 2400);
     } catch {
@@ -126,4 +183,32 @@ if (navigator.clipboard?.writeText && window.isSecureContext) {
       copying = false;
     }
   });
+}
+
+
+const period = document.querySelector('.period');
+let pawTimer;
+function revealPaw() {
+  clearTimeout(pawTimer);
+  period.classList.remove('is-missing');
+  period.classList.add('is-paw');
+  pawTimer = setTimeout(() => period.classList.remove('is-paw'), 2400);
+}
+period.disabled = false;
+period.addEventListener('dblclick', revealPaw);
+// Native button activation gives keyboard and assistive-tech users the same discovery.
+period.addEventListener('click', (event) => {
+  if (event.detail === 0) revealPaw();
+});
+
+
+// Repeating a discovery extends it instead of letting an older timer end it early.
+const effectTimers = new Map();
+function briefly(element, className) {
+  clearTimeout(effectTimers.get(className));
+  element.classList.add(className);
+  effectTimers.set(className, setTimeout(() => {
+    element.classList.remove(className);
+    effectTimers.delete(className);
+  }, 2400));
 }
