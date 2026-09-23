@@ -1,122 +1,94 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jeme</title>
-    
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Building the future, one commit at a time.">
-    <meta name="keywords" content="software developer, programmer, coding, jeme">
-    <meta name="author" content="Jeme">
-    <meta name="robots" content="index, follow">
-    <meta name="language" content="English">
-    <meta name="revisit-after" content="7 days">
-    
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Jeme">
-    <meta property="og:description" content="Building the future, one commit at a time.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://jeme.app">
-    <meta property="og:image" content="https://jeme.app/assets/favicon.png">
-    <meta property="og:image:width" content="512">
-    <meta property="og:image:height" content="512">
-    <meta property="og:site_name" content="Jeme">
-    <meta property="og:locale" content="en_US">
-    
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Jeme">
-    <meta name="twitter:description" content="Building the future, one commit at a time.">
-    <meta name="twitter:image" content="https://jeme.app/assets/favicon.png">
-    <meta name="twitter:creator" content="@TheJeme">
-    
-    <!-- Additional Meta Tags -->
-    <meta name="theme-color" content="#090d0b">
-    <meta name="msapplication-TileColor" content="#0a0a0a">
-    <meta name="msapplication-config" content="browserconfig.xml">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Jeme">
-    
-    <!-- Favicon and Icons -->
-    <link rel="icon" type="image/png" href="assets/favicon.png">
-    <link rel="apple-touch-icon" href="assets/favicon.png">
-    <link rel="canonical" href="https://jeme.app">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Jeme — Software developer</title>
+  <meta name="description" content="Jeme, software developer. Find me on GitHub, Ailurus, and Steam.">
+  <meta name="author" content="Jeme">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#191a18" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="https://jeme.app/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Jeme">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="Jeme — Software developer">
+  <meta property="og:description" content="Find me on GitHub, Ailurus, and Steam.">
+  <meta property="og:url" content="https://jeme.app/">
+  <meta property="og:image" content="https://jeme.app/assets/social.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Jeme — Software developer, with the Miumau cat avatar.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Jeme — Software developer">
+  <meta name="twitter:description" content="Find me on GitHub, Ailurus, and Steam.">
+  <meta name="twitter:image" content="https://jeme.app/assets/social.png">
+  <meta name="twitter:image:alt" content="Jeme — Software developer, with the Miumau cat avatar.">
+  <meta name="twitter:creator" content="@TheJeme">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Jeme">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/script.js" defer></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Jeme",
+      "url": "https://jeme.app/",
+      "image": "https://jeme.app/assets/icon-512.png",
+      "sameAs": [
+        "https://github.com/thejeme",
+        "https://ailurus.jeme.app/profile/Jeme",
+        "https://steamcommunity.com/id/thejeme"
+      ]
+    }
+  </script>
 </head>
 <body>
-    <!-- Animated Background -->
-    <div class="bg-animation" aria-hidden="true">
-        <div class="stars"></div>
-        <div class="particles"></div>
-    </div>
-
-    <!-- Main Content -->
-    <main class="container">
-        <!-- Terminal Window -->
-        <section class="terminal" aria-label="Jeme's terminal profile">
-            <div class="terminal-header">
-                <div class="terminal-buttons">
-                    <span class="btn close"></span>
-                    <span class="btn minimize"></span>
-                    <span class="btn maximize"></span>
-                </div>
-                <div class="terminal-title">jeme@developer:~$</div>
-            </div>
-            <div class="terminal-body">
-                <div class="terminal-line">
-                    <span class="prompt">$</span>
-                    <span class="command">whoami</span>
-                </div>
-                <div class="terminal-output">Jeme</div>
-                
-
-                <div class="terminal-line">
-                    <span class="prompt">$</span>
-                    <span class="command">ls -la /</span>
-                </div>
-                <div class="terminal-output">
-                    <div class="project-links">
-                        <a href="https://github.com/thejeme" target="_blank" rel="noreferrer" class="project-link">
-                            <span class="icon">📁</span> GitHub
-                        </a>
-                        <a href="https://ailurus.jeme.app/profile/Jeme" target="_blank" rel="noreferrer" class="project-link">
-                            <span class="icon">🗄️</span> Ailurus
-                        </a>
-                        <a href="https://steamcommunity.com/id/thejeme" target="_blank" rel="noreferrer" class="project-link">
-                            <span class="icon">🎮</span> Steam
-                        </a>
-                    </div>
-                </div>
-
-                <div class="terminal-line">
-                    <span class="prompt">$</span>
-                    <span class="command">echo "Building the future, one commit at a time..."</span>
-                </div>
-                <div class="terminal-output">Building the future, one commit at a time...</div>
-
-                <div class="terminal-line active">
-                    <span class="prompt">$</span>
-                    <span class="cursor">█</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- Floating Code Elements -->
-        <div class="floating-code" aria-hidden="true">
-            <div class="code-snippet">&lt;/&gt;</div>
-            <div class="code-snippet">[]</div>
-            <div class="code-snippet">() => {}</div>
-            <div class="code-snippet">:(){ :|:& };:</div>
-            <div class="code-snippet">//</div>
+  <div class="page">
+    <header class="masthead"><span>jeme.app</span></header>
+    <main id="main">
+      <section class="profile" aria-labelledby="name">
+        <div class="introduction">
+          <h1 id="name">Jeme<span class="period">.</span></h1>
+          <p>Software developer.</p>
         </div>
-
-        <!-- Matrix Rain Effect -->
-        <canvas id="matrix" class="matrix-rain" aria-hidden="true"></canvas>
+        <picture class="avatar">
+          <source srcset="/assets/avatar-white.webp" media="(prefers-color-scheme: dark)">
+          <img src="/assets/avatar-black.webp" width="128" height="128" alt="em" fetchpriority="high">
+        </picture>
+      </section>
+      <nav class="links" aria-labelledby="links-heading">
+        <h2 id="links-heading">Find me online</h2>
+        <ul>
+          <li>
+            <a href="https://github.com/thejeme" target="_blank" rel="noopener noreferrer">
+              <span class="link-name">GitHub</span>
+              <span class="sr-only"> (opens in a new tab)</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://ailurus.jeme.app/profile/Jeme" target="_blank" rel="noopener noreferrer">
+              <span class="link-name">Ailurus</span>
+              <span class="sr-only"> (opens in a new tab)</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://steamcommunity.com/id/thejeme" target="_blank" rel="noopener noreferrer">
+              <span class="link-name">Steam</span>
+              <span class="sr-only"> (opens in a new tab)</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
     </main>
-
-    <script src="script.js"></script>
+  </div>
 </body>
 </html>
