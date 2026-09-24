@@ -352,7 +352,7 @@ for (const link of document.querySelectorAll('.links a[target="_blank"]')) {
       const lastSeen = Number(localStorage.getItem(cooldownKey));
       if (lastSeen > 0 && Date.now() - lastSeen < day) return;
     } catch { /* A private browser still gets one chance during this page visit. */ }
-    if (Math.random() >= 0.08) return;
+    if (Math.random() >= 0.02) return;
   }
   const hour = new Date().getHours();
   const choices = hour >= 21 || hour < 6 ? ['cat', 'owl'] : ['cat', 'fox'];

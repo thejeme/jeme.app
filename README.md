@@ -54,6 +54,6 @@ Pull the bottom-right page corner inward to reveal a sheet with only a cat drawi
 
 ## Rare visitors
 
-Each tab session has an 8% chance of a visitor after 8–20 seconds on the visible page. A shy cat can appear at any hour, a fox during the day, and an owl between 21:00 and 06:00, using the visitor’s local clock. They peek out from behind em for 12 seconds; clicking one earns a short reply. A sighting starts a 24-hour cooldown shared across tabs through local storage. No tracking or network requests are involved. Storage restrictions fall back to one chance per page load. Visitors wait while a dialog is open or em is speaking, disappear when the tab is hidden, respect reduced motion, and add no Tab stops.
+Each tab session has a 2% chance of a visitor after 8–20 seconds on the visible page. A shy cat can appear at any hour, a fox during the day, and an owl between 21:00 and 06:00, using the visitor’s local clock. They peek out from behind em for 12 seconds; clicking one earns a short reply. A sighting starts a 24-hour cooldown shared across tabs through local storage. No tracking or network requests are involved. Storage restrictions fall back to one chance per page load. Visitors wait while a dialog is open or em is speaking, disappear when the tab is hidden, respect reduced motion, and add no Tab stops.
 
 For a deliberate preview, use `/?visitor=cat`, `/?visitor=fox`, or `/?visitor=owl`. Previews appear after one second and do not affect the normal rarity or cooldown.
