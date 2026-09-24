@@ -20,11 +20,11 @@ The supplied `assets/miumau-*.png` files are the avatar originals. The page uses
 
 ## Easter eggs
 
-Click the avatar (or focus it and press Enter/Space) to pet em; every third pet shows “mrrp.” Em gets a small “z” after 60 seconds without activity and wakes on interaction. Blue is the default on ordinary days. Type `miumau` outside a text field to toggle between blue and the neutral/seasonal palette for the current visit. Type `jeme` for “that’s me.” The developer console has a small greeting. All effects are silent, respect reduced motion, and work offline after the first visit.
+Click the avatar to pet em; every third pet shows “mrrp.” Em gets a small “z” after 60 seconds without activity and wakes on interaction. Blue is the default on ordinary days. Type `miumau` outside a text field to toggle between blue and the neutral/seasonal palette for the current visit. Type `jeme` for “that’s me.” The developer console has a small greeting. All effects are silent, respect reduced motion, and work offline after the first visit.
 
 The Discord row copies `thejeme` through the browser clipboard API. The button is rendered directly in HTML so no username flashes while scripts load. If clipboard access fails, it shows the username with instructions and allows retrying; without JavaScript, a static instruction is shown. Text selection is disabled site-wide. No third-party profile or clipboard service is used.
 
-More discoveries: `pspsps` wakes em with “?”, `hello` gets “hi.”, and `bye` gets “bye.” Between midnight and 5 a.m. in the visitor’s local time, each pet has a 25% chance of getting “still awake?”. Click the name’s dot (or focus it and press Enter/Space) to open em’s little room. During Easter, the first click still discovers the egg; the next opens the room. Printing reveals “you put the cat on paper.” beneath em.
+More discoveries: `pspsps` wakes em with “?”, `hello` gets “hi.”, and `bye` gets “bye.” Between midnight and 5 a.m. in the visitor’s local time, each pet has a 25% chance of getting “still awake?”. Click the name’s dot to open em’s little room. During Easter, the first click still discovers the egg; the next opens the room. Printing reveals “you put the cat on paper.” beneath em.
 
 Type `fetch` to let em borrow the dot (“mine.”), `purr` for “prrr.”, `rain` for a tiny cloud and “…”, `sit` for “no.”, or `?` for “?”. `uemaim` (or `uamuim`, the actual reverse of `miumau`) briefly mirrors em. Hover with a mouse for four seconds without petting for “yes?”. Returning after the tab has been hidden for at least five minutes gets “oh. you.” Temporary visual effects reset after 2.4 seconds without changing layout.
 
@@ -50,4 +50,4 @@ Type `help` to open a compact command guide or `seasons` to open the seasonal pi
 
 ## Hidden places
 
-The period opens a tiny illustrated room. Click em inside for a quiet reply. Pull the bottom-right page corner inward to reveal a sketchbook with name studies, a cat drawing, notes, and paw prints. A tap or keyboard activation opens it too; short drags and cancelled gestures return the corner to rest. Both places use native dialogs with close buttons and Escape support. Opening an external profile link makes em wave without delaying or intercepting navigation. Reduced motion shows a still raised paw. All three features use local assets and work offline.
+The period opens a tiny illustrated room. Click em inside for a quiet reply. Pull the bottom-right page corner inward to reveal a sheet with only a cat drawing, paw prints, and a fish sketch. Tap the sheet or press Escape to return. A tap or keyboard activation opens it too; short drags and cancelled gestures return the corner to rest. Both places use native dialogs with keyboard dismissal and Escape support. Opening an external profile link makes em wave without delaying or intercepting navigation. Reduced motion shows a still raised paw. All three features use local assets and work offline.

@@ -1,4 +1,4 @@
-const CACHE = 'jeme-v20';
+const CACHE = 'jeme-v23';
 const SHELL = ['/', '/index.html', '/404.html', '/style.css', '/script.js', '/seasons.js', '/site.webmanifest',
   '/assets/avatar-blue.webp', '/assets/avatar-black.webp', '/assets/avatar-white.webp', '/assets/favicon.png',
   '/assets/apple-touch-icon.png', '/assets/icon-192.png', '/assets/icon-512.png',
