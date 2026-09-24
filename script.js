@@ -144,6 +144,7 @@ window.addEventListener('keydown', (event) => {
   if (action) {
     secret = '';
     if (action === 'fetch') {
+      clearTimeout(pawTimer);
       period.classList.remove('is-paw');
       briefly(period, 'is-missing');
       say('mine.');
@@ -197,14 +198,24 @@ discordContact.addEventListener('click', async () => {
 
 
 const period = document.querySelector('.period');
-period.disabled = false;
-period.addEventListener('click', () => {
+let pawTimer;
+function revealPaw() {
   if (document.documentElement.dataset.season === 'easter' && !document.documentElement.classList.contains('egg-found')) {
-    period.classList.remove('is-missing', 'is-paw');
     window.dispatchEvent(new Event('season-egg'));
     return;
   }
-  document.getElementById('pocket-room').showModal();
+  clearTimeout(pawTimer);
+  period.classList.remove('is-missing');
+  period.classList.add('is-paw');
+  pawTimer = setTimeout(() => period.classList.remove('is-paw'), 2400);
+}
+period.disabled = false;
+period.addEventListener('dblclick', revealPaw);
+period.addEventListener('click', (event) => {
+  if (document.documentElement.dataset.season === 'easter' && !document.documentElement.classList.contains('egg-found')) {
+    period.classList.remove('is-missing', 'is-paw');
+    window.dispatchEvent(new Event('season-egg'));
+  } else if (event.detail === 0) revealPaw();
 });
 
 // Repeating a discovery extends it instead of letting an older timer end it early.
@@ -259,20 +270,10 @@ discoveries.addEventListener('keydown', (event) => {
 });
 
 
-// Small places to explore, with the same native keyboard dismissal as the guide.
-for (const panel of document.querySelectorAll('#pocket-room, #sketchbook')) {
-  panel.querySelector('[data-close]').addEventListener('click', () => panel.close());
-  panel.addEventListener('close', () => { secret = ''; });
-}
-const roomReply = document.querySelector('.room-reply');
-const roomReplies = ['oh. a guest.', 'the rent is one dot.', 'you can stay.', 'mind the plant.'];
-let roomVisits = 0;
-document.querySelector('.room-cat').addEventListener('click', () => {
-  roomReply.textContent = roomReplies[roomVisits++ % roomReplies.length];
-});
-
 const corner = document.querySelector('.page-corner');
 const sketchbook = document.getElementById('sketchbook');
+sketchbook.querySelector('[data-close]').addEventListener('click', () => sketchbook.close());
+sketchbook.addEventListener('close', () => { secret = ''; });
 let cornerDrag;
 let suppressCornerClick = false;
 corner.hidden = false;
@@ -322,3 +323,81 @@ for (const link of document.querySelectorAll('.links a[target="_blank"]')) {
   link.addEventListener('click', waveGoodbye);
   link.addEventListener('auxclick', (event) => { if (event.button === 1) waveGoodbye(); });
 }
+
+// One quiet chance per tab session; a sighting earns a day of peace.
+(() => {
+  const visitors = {
+    cat: {
+      label: 'A shy cat', reply: 'oh. you brought a friend.',
+      drawing: '<path d="m9 31 1-23 15 12q9-3 17 0L55 8l1 25v18H9Z"/><path d="m20 34 3 1m19-1-3 1m-10 7 4 3 4-3"/>',
+    },
+    fox: {
+      label: 'A curious fox', reply: 'just passing through.',
+      drawing: '<path d="m8 30 2-24 18 17h10L55 6l2 25-12 21H21Z"/><path d="m10 31 23 17 23-17M21 31h3m18 0h3m-15 13h6"/>',
+    },
+    owl: {
+      label: 'A little night owl', reply: 'another night person.',
+      drawing: '<path d="M10 52V13l12 8q11-5 22 0l12-8v39Z"/><circle cx="23" cy="33" r="8"/><circle cx="43" cy="33" r="8"/><path d="M23 32v2m20-2v2m-13 9 3 5 3-5"/>',
+    },
+  };
+  const preview = new URLSearchParams(location.search).get('visitor');
+  const isPreview = Object.hasOwn(visitors, preview);
+  const cooldownKey = 'jeme-visitor-last-seen';
+  const rollKey = 'jeme-visitor-rolled';
+  const day = 24 * 60 * 60 * 1000;
+  if (!isPreview) {
+    try {
+      if (sessionStorage.getItem(rollKey)) return;
+      sessionStorage.setItem(rollKey, 'yes');
+      const lastSeen = Number(localStorage.getItem(cooldownKey));
+      if (lastSeen > 0 && Date.now() - lastSeen < day) return;
+    } catch { /* A private browser still gets one chance during this page visit. */ }
+    if (Math.random() >= 0.08) return;
+  }
+  const hour = new Date().getHours();
+  const choices = hour >= 21 || hour < 6 ? ['cat', 'owl'] : ['cat', 'fox'];
+  const kind = isPreview ? preview : choices[Math.floor(Math.random() * choices.length)];
+  const visitor = visitors[kind];
+  let timer;
+  let guest;
+  let finished = false;
+  function leave() {
+    clearTimeout(timer);
+    guest?.remove();
+    finished = true;
+    document.removeEventListener('visibilitychange', onVisibility);
+  }
+  function appear() {
+    if (document.hidden || finished) return;
+    const bounds = avatar.getBoundingClientRect();
+    if (document.querySelector('dialog[open]') || avatar.matches('.is-speaking, .is-waving') || bounds.top < 32 || bounds.bottom > innerHeight) {
+      timer = setTimeout(appear, 3000);
+      return;
+    }
+    // Another tab may have hosted a visitor while this one was waiting.
+    if (!isPreview) {
+      try {
+        const lastSeen = Number(localStorage.getItem(cooldownKey));
+        if (lastSeen > 0 && Date.now() - lastSeen < day) { leave(); return; }
+        localStorage.setItem(cooldownKey, String(Date.now()));
+      } catch { /* Storage is optional. */ }
+    }
+    guest = document.createElement('button');
+    guest.type = 'button';
+    guest.tabIndex = -1;
+    guest.className = `rare-visitor visitor-${kind}`;
+    guest.setAttribute('aria-label', visitor.label);
+    guest.innerHTML = `<svg viewBox="0 0 66 60" aria-hidden="true">${visitor.drawing}</svg>`;
+    guest.addEventListener('click', () => { say(visitor.reply); leave(); });
+    avatar.prepend(guest);
+    timer = setTimeout(leave, 12_000);
+  }
+  function schedule() { timer = setTimeout(appear, isPreview ? 1000 : 8000 + Math.random() * 12_000); }
+  function onVisibility() {
+    clearTimeout(timer);
+    if (guest) { leave(); return; }
+    if (!document.hidden && !finished) schedule();
+  }
+  document.addEventListener('visibilitychange', onVisibility);
+  if (!document.hidden) schedule();
+})();

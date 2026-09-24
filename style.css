@@ -240,21 +240,14 @@ body:has(.discovery-panel[open]) { overflow: hidden; }
 .avatar.is-snowing .cat-snow { visibility: visible; }
 @media print { .vappu-cap, .cat-snow { display: none !important; } }
 
-/* A tiny world inside the punctuation. */
-.pocket-room { width: min(440px, calc(100% - 32px)); }
-.room-scene { position: relative; }
-.room-scene > svg { display: block; width: 100%; height: auto; }
-.room-cat { position: absolute; left: 31%; bottom: 12%; width: 25%; padding: 0; border: 0; background: transparent; border-radius: 18%; }
-.room-cat img { display: block; width: 100%; height: auto; border-radius: 18%; }
-.room-cat:hover { transform: rotate(-4deg); }
-.room-reply { min-height: 1.6em; margin: 18px 0 0; color: var(--muted); font: italic 14px/1.6 Georgia, serif; text-align: center; }
-
 /* The folded corner can be pulled, tapped, or activated with a keyboard. */
-.page-corner { position: fixed; right: 0; bottom: 0; z-index: 5; width: 60px; height: 60px; border: 0; padding: 25px 7px 5px 26px; background: linear-gradient(135deg, transparent 48%, var(--line) 49%, var(--hover) 52%); color: var(--muted); cursor: grab; touch-action: none; }
+.page-corner { display: none; position: fixed; right: 0; bottom: 0; z-index: 5; width: 44px; height: 44px; border: 0; padding: 18px 4px 3px 19px; background: linear-gradient(135deg, transparent 48%, var(--line) 49%, var(--hover) 52%); color: var(--muted); cursor: grab; touch-action: none; }
 .page-corner[hidden] { display: none; }
 .page-corner:active { cursor: grabbing; }
 .page-corner:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; }
-.page-corner span { font-size: 19px; }
+.page-corner span { font-size: 15px; }
+@media (min-width: 1921px) { .page-corner:not([hidden]) { display: block; } }
+@media (max-width: 1920px) { .corner-peek { display: none; } }
 .corner-peek { position: fixed; right: 0; bottom: 0; z-index: 4; width: var(--peel-size, 64px); height: var(--peel-size, 64px); background: var(--hover); clip-path: polygon(100% 0, 100% 100%, 0 100%); pointer-events: none; visibility: hidden; }
 .is-peeking .corner-peek { visibility: visible; }
 .sketchbook { width: min(480px, calc(100% - 32px), 75svh); padding: 0; border-radius: 2px; overflow: visible; }
@@ -271,8 +264,19 @@ body:has(.discovery-panel[open]) { overflow: hidden; }
 .wave-paw { position: absolute; width: 35%; height: 45%; right: -12%; bottom: 12%; color: var(--accent); visibility: hidden; pointer-events: none; transform-origin: 50% 95%; }
 .is-waving .wave-paw { visibility: visible; animation: goodbye 1s ease-in-out; }
 @keyframes goodbye { 0%, 100% { transform: rotate(0); } 20%, 60% { transform: rotate(22deg); } 40%, 80% { transform: rotate(-18deg); } }
-@media (prefers-reduced-motion: reduce) { .is-waving .wave-paw { animation: none; } .room-cat:hover { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .is-waving .wave-paw { animation: none; } }
 @media print { .page-corner, .corner-peek, .wave-paw { display: none !important; } }
 
-/* Hidden cat interactions stay out of the Tab sequence and do not gain a focus ring on modal return. */
-.pet:focus, .period:focus, .discovery-panel .room-cat:focus { outline: none; }
+/* Hidden cat interactions stay out of the Tab sequence without focus rings. */
+.pet:focus, .period:focus { outline: none; }
+
+/* Visitors peek from behind em without moving the profile or adding Tab stops. */
+.avatar { isolation: isolate; }
+.pet { position: relative; z-index: 1; }
+.rare-visitor { position: absolute; top: -25px; left: -18px; z-index: 0; width: 54px; height: 52px; padding: 0; border: 0; background: transparent; color: var(--accent); cursor: pointer; animation: visitor-arrive 500ms ease-out both; -webkit-tap-highlight-color: transparent; }
+.rare-visitor svg { display: block; width: 100%; height: 100%; fill: var(--paper); stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.rare-visitor svg path:not(:first-child) { fill: none; }
+.rare-visitor:focus { outline: none; }
+@keyframes visitor-arrive { from { opacity: 0; transform: translate(9px, 16px); } to { opacity: 1; transform: translate(0, 0); } }
+@media (prefers-reduced-motion: reduce) { .rare-visitor { animation: none; } }
+@media print { .rare-visitor { display: none !important; } }

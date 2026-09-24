@@ -34,9 +34,9 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
-  <link rel="stylesheet" href="/style.css?v=22">
-  <script src="/seasons.js?v=22" defer></script>
-  <script src="/script.js?v=22" defer></script>
+  <link rel="stylesheet" href="/style.css?v=26">
+  <script src="/seasons.js?v=26" defer></script>
+  <script src="/script.js?v=26" defer></script>
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -57,7 +57,7 @@
     <main id="main">
       <section class="profile" aria-labelledby="name">
         <div class="introduction">
-          <h1 id="name" aria-label="Jeme">Jeme<button class="period" type="button" tabindex="-1" aria-label="Peek inside the dot" aria-haspopup="dialog" aria-controls="pocket-room" disabled><span class="period-dot" aria-hidden="true">.</span><svg class="paw" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><ellipse cx="7" cy="12" rx="3" ry="4" transform="rotate(-25 7 12)"/><ellipse cx="13" cy="7" rx="3" ry="4"/><ellipse cx="21" cy="7" rx="3" ry="4"/><ellipse cx="27" cy="13" rx="3" ry="4" transform="rotate(25 27 13)"/><path d="M8 24c0-4 5-10 9-10s9 6 9 10c0 6-6 3-9 3s-9 3-9-3Z"/></svg></button></h1>
+          <h1 id="name" aria-label="Jeme">Jeme<button class="period" type="button" tabindex="-1" aria-label="Reveal a paw print" disabled><span class="period-dot" aria-hidden="true">.</span><svg class="paw" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><ellipse cx="7" cy="12" rx="3" ry="4" transform="rotate(-25 7 12)"/><ellipse cx="13" cy="7" rx="3" ry="4"/><ellipse cx="21" cy="7" rx="3" ry="4"/><ellipse cx="27" cy="13" rx="3" ry="4" transform="rotate(25 27 13)"/><path d="M8 24c0-4 5-10 9-10s9 6 9 10c0 6-6 3-9 3s-9 3-9-3Z"/></svg></button></h1>
           <p class="bio">Now you see me.</p>
         </div>
         <div class="avatar">
@@ -129,7 +129,7 @@
         <div><dt><code>seasons</code></dt><dd>Try a seasonal theme.</dd></div>
         <div><dt><code>help</code></dt><dd>Come back here.</dd></div>
       </dl>
-      <p class="panel-note">Pet em, linger with your mouse, or peek inside the dot. Pull the bottom-right corner to see the other side. There are surprises after a nap, late at night, on special dates, and even on paper.</p>
+      <p class="panel-note">Pet em, linger with your mouse, or double-click the dot. Pull the bottom-right corner to see the other side. There are surprises after a nap, late at night, on special dates, and even on paper.</p>
       <button class="panel-button" type="button" id="browse-seasons">Explore seasons <span aria-hidden="true">→</span></button>
     </section>
     <section id="season-guide" aria-label="Season previews" hidden>
@@ -158,27 +158,6 @@
   </dialog>
   <button class="page-corner" type="button" tabindex="-1" aria-label="Turn the page over" aria-haspopup="dialog" aria-controls="sketchbook" hidden><span aria-hidden="true">↖</span></button>
   <div class="corner-peek" aria-hidden="true"></div>
-  <dialog class="discovery-panel pocket-room" id="pocket-room" aria-labelledby="room-title">
-    <div class="discovery-header"><h2 id="room-title">A little room.</h2><button class="panel-close" type="button" data-close aria-label="Leave the little room" autofocus>×</button></div>
-    <p class="panel-intro">So this is where em goes.</p>
-    <div class="room-scene">
-      <svg viewBox="0 0 400 320" role="img" aria-label="A quiet room with a moonlit window, a plant, books and em resting on a rug">
-        <defs><pattern id="room-floor" width="55" height="24" patternUnits="userSpaceOnUse"><path d="M0 24h55M28 0v24" fill="none" stroke="currentColor" opacity=".12"/></pattern></defs>
-        <path d="M15 235V20h370v215" fill="var(--hover)" stroke="var(--line)"/>
-        <path d="M15 235h370l15 85H0Z" fill="url(#room-floor)" stroke="var(--line)"/>
-        <rect x="45" y="48" width="100" height="114" rx="48" fill="var(--paper)" stroke="var(--accent)"/>
-        <path d="M95 48v114M45 108h100" stroke="var(--line)"/>
-        <path d="M115 69a14 14 0 1 0 10 23 16 16 0 0 1-10-23" fill="var(--accent)" opacity=".65"/>
-        <path d="M238 128h103M250 128V91h14v37m7 0V82h12v46m8 0 8-43 13 3-8 40" fill="none" stroke="var(--muted)" stroke-width="2"/>
-        <path d="M322 237v-47m0 22q-34-5-23-27 23 2 23 27m0-15q28-3 25-25-23 0-25 25" fill="var(--accent)"/>
-        <path d="m303 228 6 30h28l5-30Z" fill="var(--paper)" stroke="var(--muted)"/>
-        <ellipse cx="175" cy="271" rx="95" ry="26" fill="var(--accent)" opacity=".16"/>
-        <path d="M85 190h42m-38 5h35m-30 5h25" stroke="var(--line)"/>
-      </svg>
-      <button class="room-cat" type="button" tabindex="-1" aria-label="Say hello to em"><img src="/assets/avatar-blue.webp" width="100" height="100" alt="em" draggable="false"></button>
-    </div>
-    <p class="room-reply" role="status" aria-live="polite">make yourself small. stay a while.</p>
-  </dialog>
   <dialog class="discovery-panel sketchbook" id="sketchbook" aria-label="Cat, paw prints and fish sketches">
     <button class="sketch-dismiss" type="button" data-close aria-label="Return to the front" autofocus>
       <svg class="sketch-cat" viewBox="0 0 200 160" role="img" aria-label="A pencil sketch of em"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m40 65-5-42 38 24q29-12 55 0l33-25-4 47c31 82-139 91-117-4Z"/><path d="m42 64-3-33 34 22M132 53l23-23-3 36" opacity=".3"/><path d="M66 83h1m65 0h1M94 98l7 4 7-5m-7 5v8m-14-2q7 8 14 2 8 6 15-2M32 97l34 5m-38 11 37-5m70-8 35-9m-34 17 39 2"/></g></svg>

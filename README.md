@@ -24,7 +24,7 @@ Click the avatar to pet em; every third pet shows “mrrp.” Em gets a small �
 
 The Discord row copies `thejeme` through the browser clipboard API. The button is rendered directly in HTML so no username flashes while scripts load. If clipboard access fails, it shows the username with instructions and allows retrying; without JavaScript, a static instruction is shown. Text selection is disabled site-wide. No third-party profile or clipboard service is used.
 
-More discoveries: `pspsps` wakes em with “?”, `hello` gets “hi.”, and `bye` gets “bye.” Between midnight and 5 a.m. in the visitor’s local time, each pet has a 25% chance of getting “still awake?”. Click the name’s dot to open em’s little room. During Easter, the first click still discovers the egg; the next opens the room. Printing reveals “you put the cat on paper.” beneath em.
+More discoveries: `pspsps` wakes em with “?”, `hello` gets “hi.”, and `bye` gets “bye.” Between midnight and 5 a.m. in the visitor’s local time, each pet has a 25% chance of getting “still awake?”. Double-click the name’s dot for a brief paw print. During Easter, clicking it discovers the hidden egg. Printing reveals “you put the cat on paper.” beneath em.
 
 Type `fetch` to let em borrow the dot (“mine.”), `purr` for “prrr.”, `rain` for a tiny cloud and “…”, `sit` for “no.”, or `?` for “?”. `uemaim` (or `uamuim`, the actual reverse of `miumau`) briefly mirrors em. Hover with a mouse for four seconds without petting for “yes?”. Returning after the tab has been hidden for at least five minutes gets “oh. you.” Temporary visual effects reset after 2.4 seconds without changing layout.
 
@@ -50,4 +50,10 @@ Type `help` to open a compact command guide or `seasons` to open the seasonal pi
 
 ## Hidden places
 
-The period opens a tiny illustrated room. Click em inside for a quiet reply. Pull the bottom-right page corner inward to reveal a sheet with only a cat drawing, paw prints, and a fish sketch. Tap the sheet or press Escape to return. A tap or keyboard activation opens it too; short drags and cancelled gestures return the corner to rest. Both places use native dialogs with keyboard dismissal and Escape support. Opening an external profile link makes em wave without delaying or intercepting navigation. Reduced motion shows a still raised paw. All three features use local assets and work offline.
+Pull the bottom-right page corner inward to reveal a sheet with only a cat drawing, paw prints, and a fish sketch. Tap the sheet or press Escape to return. A tap or keyboard activation opens it too; short drags and cancelled gestures return the corner to rest. The sketchbook uses a native dialog with Escape support. Opening an external profile link makes em wave without delaying or intercepting navigation. Reduced motion shows a still raised paw. These features use local assets and work offline.
+
+## Rare visitors
+
+Each tab session has an 8% chance of a visitor after 8–20 seconds on the visible page. A shy cat can appear at any hour, a fox during the day, and an owl between 21:00 and 06:00, using the visitor’s local clock. They peek out from behind em for 12 seconds; clicking one earns a short reply. A sighting starts a 24-hour cooldown shared across tabs through local storage. No tracking or network requests are involved. Storage restrictions fall back to one chance per page load. Visitors wait while a dialog is open or em is speaking, disappear when the tab is hidden, respect reduced motion, and add no Tab stops.
+
+For a deliberate preview, use `/?visitor=cat`, `/?visitor=fox`, or `/?visitor=owl`. Previews appear after one second and do not affect the normal rarity or cooldown.
