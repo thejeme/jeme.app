@@ -137,7 +137,7 @@
     }
     ornament.classList.toggle('is-interactive', actionable);
     root.classList.toggle('egg-found', hasFound('easter'));
-    if (period) period.setAttribute('aria-label', key === 'easter' && !hasFound('easter') ? 'Find the Easter egg' : 'Reveal a paw print');
+    if (period) period.setAttribute('aria-label', key === 'easter' && !hasFound('easter') ? 'Find the Easter egg' : 'Peek inside the dot');
   }
   window.addEventListener('season-pet', (event) => {
     const key = root.dataset.season;

@@ -13,8 +13,8 @@
 }
 
 * { box-sizing: border-box; }
+*, *::before, *::after { -webkit-user-select: none; user-select: none; }
 body { margin: 0; }
-::selection { background: var(--ink); color: var(--paper); }
 
 .page {
   width: min(100% - 64px, 680px);
@@ -120,8 +120,7 @@ a:focus-visible, .pet:focus-visible, .period:focus-visible, .discord-row:focus-v
 
 .discord-row { width: 100%; justify-content: space-between; gap: 16px; border: 0; background: none; font: inherit; text-align: left; }
 button.discord-row { cursor: copy; }
-.discord-username { color: var(--muted); font-size: 13px; }
-div.discord-row .discord-username { user-select: all; }
+button.discord-row:disabled { cursor: default; }
 .discord-feedback { margin: -8px 4px 18px; color: var(--muted); font-size: 12px; line-height: 1.5; }
 
 .period { position: relative; min-width: 24px; padding: 0; border: 0; background: none; font: inherit; letter-spacing: inherit; cursor: pointer; touch-action: manipulation; }
@@ -167,11 +166,12 @@ div.discord-row .discord-username { user-select: all; }
   from { opacity: .65; transform: translateY(3px); }
   to { opacity: 1; transform: translateY(0); }
 }
-button.discord-row .discord-username {
+button.discord-row .discord-confirmation {
+  font-size: 13px;
   display: inline-flex; align-items: center; gap: 6px; color: var(--accent);
   opacity: 0; visibility: hidden; transition: opacity 160ms ease, visibility 0s linear 160ms;
 }
-button.discord-row.is-copied .discord-username { opacity: 1; visibility: visible; transition-delay: 0s; }
+button.discord-row.is-copied .discord-confirmation { opacity: 1; visibility: visible; transition-delay: 0s; }
 .copy-check { font-size: 14px; line-height: 1; }
 @media print {
   .link-name::after, .home-link > span::after { display: none; }
@@ -189,7 +189,8 @@ button.discord-row.is-copied .discord-username { opacity: 1; visibility: visible
 @media screen and (prefers-color-scheme: dark) {
   :root[data-season]:not(.blue-mode):not([data-season="aprilfools"]):not([data-season="friday13"]) { --paper: var(--season-paper-dark); --ink: var(--season-ink-dark); --muted: var(--season-muted-dark); --line: var(--season-line-dark); --accent: var(--season-accent-dark); }
 }
-.introduction { position: relative; }
+.introduction { position: relative; min-width: 0; }
+.bio { max-width: 32ch; margin: 20px 0 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
 .season-label { position: absolute; top: 100%; left: 0; margin: 18px 0 0; color: var(--accent); font-size: 11px; line-height: 1.5; letter-spacing: .025em; white-space: nowrap; }
 .season-ornament { position: absolute; bottom: -4px; right: -4px; width: 34px; height: 34px; padding: 3px; border: 1px solid var(--line); border-radius: 50%; background: var(--paper); pointer-events: none; }
 .season-ornament svg { display: block; width: 100%; height: 100%; }
@@ -239,3 +240,42 @@ body:has(.discovery-panel[open]) { overflow: hidden; }
 .cat-snow { position: absolute; right: 0; top: -52px; width: 100%; height: 30px; color: var(--accent); visibility: hidden; pointer-events: none; }
 .avatar.is-snowing .cat-snow { visibility: visible; }
 @media print { .vappu-cap, .cat-snow { display: none !important; } }
+
+/* A tiny world inside the punctuation. */
+.pocket-room { width: min(440px, calc(100% - 32px)); }
+.room-scene { position: relative; }
+.room-scene > svg { display: block; width: 100%; height: auto; }
+.room-cat { position: absolute; left: 31%; bottom: 12%; width: 25%; padding: 0; border: 0; background: transparent; border-radius: 18%; }
+.room-cat img { display: block; width: 100%; height: auto; border-radius: 18%; }
+.room-cat:hover { transform: rotate(-4deg); }
+.room-reply { min-height: 1.6em; margin: 18px 0 0; color: var(--muted); font: italic 14px/1.6 Georgia, serif; text-align: center; }
+
+/* The folded corner can be pulled, tapped, or activated with a keyboard. */
+.page-corner { position: fixed; right: 0; bottom: 0; z-index: 5; width: 60px; height: 60px; border: 0; padding: 25px 7px 5px 26px; background: linear-gradient(135deg, transparent 48%, var(--line) 49%, var(--hover) 52%); color: var(--muted); cursor: grab; touch-action: none; }
+.page-corner[hidden] { display: none; }
+.page-corner:active { cursor: grabbing; }
+.page-corner:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; }
+.page-corner span { font-size: 19px; }
+.corner-peek { position: fixed; right: 0; bottom: 0; z-index: 4; width: var(--peel-size, 64px); height: var(--peel-size, 64px); background: var(--hover); clip-path: polygon(100% 0, 100% 100%, 0 100%); pointer-events: none; visibility: hidden; }
+.corner-peek span { position: absolute; right: 25px; bottom: 55px; transform: rotate(-12deg); color: var(--muted); font: italic 20px/1.4 Georgia, serif; }
+.is-peeking .corner-peek { visibility: visible; }
+.sketchbook { width: min(820px, calc(100% - 24px)); padding: clamp(22px, 5vw, 48px); border-radius: 2px; background-color: var(--paper); background-image: repeating-linear-gradient(0deg, transparent, transparent 27px, var(--line) 28px, transparent 29px); }
+.sketch-eyebrow, .sketch-number { color: var(--muted); font: 10px/1.5 ui-monospace, monospace; letter-spacing: .08em; }
+.sketch-eyebrow { margin: 0 0 12px; }
+.sketch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin: 36px 0; }
+.sketch-note { min-width: 0; }
+.name-studies { margin: 16px 0; font: 32px/1.5 Georgia, serif; letter-spacing: -.04em; transform: rotate(-5deg); }
+.name-studies s { color: var(--muted); text-decoration-thickness: 1px; }
+.name-studies strong { font-weight: 400; border-bottom: 2px solid var(--accent); }
+.pencil-note { color: var(--accent); font: italic 15px/1.6 Georgia, serif; transform: rotate(-3deg); }
+.cat-study svg { display: block; width: min(100%, 220px); margin-top: 16px; color: var(--muted); transform: rotate(6deg); }
+.sketch-list { margin-top: 18px; border: 0; font: italic 16px/1.8 Georgia, serif; }
+.sketch-list li { border: 0; margin-bottom: 8px; }
+.sketch-tracks { display: block; width: 110px; max-width: 100%; height: 140px; color: var(--accent); opacity: .6; }
+.sketch-footer { margin: 0; color: var(--muted); font: italic 13px/1.6 Georgia, serif; }
+.wave-paw { position: absolute; width: 35%; height: 45%; right: -12%; bottom: 12%; color: var(--accent); visibility: hidden; pointer-events: none; transform-origin: 50% 95%; }
+.is-waving .wave-paw { visibility: visible; animation: goodbye 1s ease-in-out; }
+@keyframes goodbye { 0%, 100% { transform: rotate(0); } 20%, 60% { transform: rotate(22deg); } 40%, 80% { transform: rotate(-18deg); } }
+@media (max-width: 480px) { .sketch-grid { gap: 24px 16px; } .name-studies { font-size: 25px; } .sketch-list { font-size: 14px; } }
+@media (prefers-reduced-motion: reduce) { .is-waving .wave-paw { animation: none; } .room-cat:hover { transform: none; } }
+@media print { .page-corner, .corner-peek, .wave-paw { display: none !important; } }

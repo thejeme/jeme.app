@@ -1,6 +1,6 @@
 if ('serviceWorker' in navigator && window.isSecureContext) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch((error) => {
+    navigator.serviceWorker.register('/sw.js', { updateViaCache: 'none' }).catch((error) => {
       console.warn('Offline support could not be enabled.', error);
     });
   });
@@ -112,7 +112,7 @@ wake();
 let secret = '';
 let lastKey = 0;
 window.addEventListener('keydown', (event) => {
-  if (document.getElementById('discoveries').open) { secret = ''; return; }
+  if (document.querySelector('dialog[open]')) { secret = ''; return; }
   // Never intercept shortcuts, composed text, or typing into form fields.
   if (event.ctrlKey || event.metaKey || event.altKey || event.isComposing ||
       event.target.closest('input, textarea, select, [contenteditable]:not([contenteditable="false"])')) {
@@ -144,7 +144,6 @@ window.addEventListener('keydown', (event) => {
   if (action) {
     secret = '';
     if (action === 'fetch') {
-      clearTimeout(pawTimer);
       period.classList.remove('is-paw');
       briefly(period, 'is-missing');
       say('mine.');
@@ -166,72 +165,47 @@ window.addEventListener('keydown', (event) => {
   window.dispatchEvent(new Event('themechange'));
 });
 
-// Keep a selectable username when JavaScript or the clipboard is unavailable.
+// The row has its final markup before scripts load, avoiding a username flash.
 const discordContact = document.getElementById('discord-contact');
 const discordStatus = document.getElementById('discord-status');
-if (navigator.clipboard?.writeText && window.isSecureContext) {
-  const copyDiscord = document.createElement('button');
-  copyDiscord.type = 'button';
-  copyDiscord.className = 'discord-row';
-  copyDiscord.setAttribute('aria-label', 'Discord: copy username thejeme');
-  copyDiscord.title = 'Copy Discord username';
-  copyDiscord.append(...[...discordContact.children].map((child) => child.cloneNode(true)));
-  const confirmation = copyDiscord.querySelector('.discord-username');
-  const check = document.createElement('span');
-  check.className = 'copy-check';
-  check.textContent = '✓';
-  confirmation.setAttribute('aria-hidden', 'true');
-  confirmation.replaceChildren(check, document.createTextNode('Copied'));
-  discordContact.replaceWith(copyDiscord);
-  let copying = false;
-  let copiedTimer;
-  copyDiscord.addEventListener('click', async () => {
-    if (copying) return;
-    copying = true;
-    clearTimeout(copiedTimer);
-    try {
-      await navigator.clipboard.writeText('thejeme');
-      copyDiscord.classList.add('is-copied');
-      discordStatus.textContent = 'Discord username thejeme copied. Paste it into Add Friend in Discord.';
-      copiedTimer = setTimeout(() => {
-        copyDiscord.classList.remove('is-copied');
-        discordStatus.textContent = '';
-      }, 2400);
-    } catch {
-      copyDiscord.replaceWith(discordContact);
-      discordContact.tabIndex = 0;
-      discordContact.focus();
-      discordStatus.className = 'discord-feedback';
-      discordStatus.textContent = 'Select the username to copy it manually.';
-    } finally {
-      copying = false;
-    }
-  });
-}
+const discordUsername = discordContact.dataset.username;
+let copyingDiscord = false;
+let copiedTimer;
+discordContact.disabled = false;
+discordContact.addEventListener('click', async () => {
+  if (copyingDiscord) return;
+  copyingDiscord = true;
+  clearTimeout(copiedTimer);
+  discordContact.classList.remove('is-copied');
+  discordStatus.className = 'sr-only';
+  discordStatus.textContent = '';
+  try {
+    await navigator.clipboard.writeText(discordUsername);
+    discordContact.classList.add('is-copied');
+    discordStatus.textContent = `Discord username ${discordUsername} copied. Paste it into Add Friend in Discord.`;
+    copiedTimer = setTimeout(() => {
+      discordContact.classList.remove('is-copied');
+      discordStatus.textContent = '';
+    }, 2400);
+  } catch {
+    discordStatus.className = 'discord-feedback';
+    discordStatus.textContent = `Couldn’t copy. Add ${discordUsername} as a friend in Discord, or try again.`;
+  } finally {
+    copyingDiscord = false;
+  }
+});
 
 
 const period = document.querySelector('.period');
-let pawTimer;
-function revealPaw() {
-  if (document.documentElement.dataset.season === 'easter' && !document.documentElement.classList.contains('egg-found')) {
-    window.dispatchEvent(new Event('season-egg'));
-    return;
-  }
-  clearTimeout(pawTimer);
-  period.classList.remove('is-missing');
-  period.classList.add('is-paw');
-  pawTimer = setTimeout(() => period.classList.remove('is-paw'), 2400);
-}
 period.disabled = false;
-period.addEventListener('dblclick', revealPaw);
-// Native button activation gives keyboard and assistive-tech users the same discovery.
-period.addEventListener('click', (event) => {
+period.addEventListener('click', () => {
   if (document.documentElement.dataset.season === 'easter' && !document.documentElement.classList.contains('egg-found')) {
     period.classList.remove('is-missing', 'is-paw');
     window.dispatchEvent(new Event('season-egg'));
-  } else if (event.detail === 0) revealPaw();
+    return;
+  }
+  document.getElementById('pocket-room').showModal();
 });
-
 
 // Repeating a discovery extends it instead of letting an older timer end it early.
 const effectTimers = new Map();
@@ -283,3 +257,68 @@ discoveries.addEventListener('keydown', (event) => {
     first.focus();
   }
 });
+
+
+// Small places to explore, with the same native keyboard dismissal as the guide.
+for (const panel of document.querySelectorAll('#pocket-room, #sketchbook')) {
+  panel.querySelector('[data-close]').addEventListener('click', () => panel.close());
+  panel.addEventListener('close', () => { secret = ''; });
+}
+const roomReply = document.querySelector('.room-reply');
+const roomReplies = ['oh. a guest.', 'the rent is one dot.', 'you can stay.', 'mind the plant.'];
+let roomVisits = 0;
+document.querySelector('.room-cat').addEventListener('click', () => {
+  roomReply.textContent = roomReplies[roomVisits++ % roomReplies.length];
+});
+
+const corner = document.querySelector('.page-corner');
+const sketchbook = document.getElementById('sketchbook');
+let cornerDrag;
+let suppressCornerClick = false;
+corner.hidden = false;
+function resetCorner() {
+  cornerDrag = null;
+  document.body.classList.remove('is-peeking');
+  document.body.style.removeProperty('--peel-size');
+}
+corner.addEventListener('pointerdown', (event) => {
+  if (!event.isPrimary || event.button !== 0) return;
+  suppressCornerClick = false;
+  cornerDrag = { id: event.pointerId, x: event.clientX, y: event.clientY, distance: 0 };
+  corner.setPointerCapture(event.pointerId);
+});
+corner.addEventListener('pointermove', (event) => {
+  if (!cornerDrag || cornerDrag.id !== event.pointerId) return;
+  cornerDrag.distance = Math.max(0, cornerDrag.x - event.clientX, cornerDrag.y - event.clientY);
+  if (cornerDrag.distance < 6) return;
+  document.body.classList.add('is-peeking');
+  document.body.style.setProperty('--peel-size', `${Math.min(420, 64 + cornerDrag.distance * 1.4)}px`);
+});
+corner.addEventListener('pointerup', (event) => {
+  if (!cornerDrag || cornerDrag.id !== event.pointerId) return;
+  const distance = cornerDrag.distance;
+  suppressCornerClick = distance >= 6;
+  resetCorner();
+  if (distance >= 45) sketchbook.showModal();
+});
+for (const type of ['pointercancel', 'lostpointercapture']) corner.addEventListener(type, resetCorner);
+corner.addEventListener('click', (event) => {
+  if (suppressCornerClick && event.detail !== 0) { suppressCornerClick = false; return; }
+  sketchbook.showModal();
+});
+
+// Let the browser open links normally; the goodbye never delays navigation.
+let waveTimer;
+function waveGoodbye() {
+  clearTimeout(hoverTimer);
+  clearTimeout(waveTimer);
+  say('see you around.');
+  avatar.classList.remove('is-waving');
+  void avatar.offsetWidth;
+  avatar.classList.add('is-waving');
+  waveTimer = setTimeout(() => avatar.classList.remove('is-waving'), 1800);
+}
+for (const link of document.querySelectorAll('.links a[target="_blank"]')) {
+  link.addEventListener('click', waveGoodbye);
+  link.addEventListener('auxclick', (event) => { if (event.button === 1) waveGoodbye(); });
+}

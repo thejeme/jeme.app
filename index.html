@@ -34,9 +34,9 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
-  <link rel="stylesheet" href="/style.css">
-  <script src="/seasons.js" defer></script>
-  <script src="/script.js" defer></script>
+  <link rel="stylesheet" href="/style.css?v=20">
+  <script src="/seasons.js?v=20" defer></script>
+  <script src="/script.js?v=20" defer></script>
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -57,7 +57,8 @@
     <main id="main">
       <section class="profile" aria-labelledby="name">
         <div class="introduction">
-          <h1 id="name" aria-label="Jeme">Jeme<button class="period" type="button" tabindex="-1" aria-label="Reveal a paw print" disabled><span class="period-dot" aria-hidden="true">.</span><svg class="paw" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><ellipse cx="7" cy="12" rx="3" ry="4" transform="rotate(-25 7 12)"/><ellipse cx="13" cy="7" rx="3" ry="4"/><ellipse cx="21" cy="7" rx="3" ry="4"/><ellipse cx="27" cy="13" rx="3" ry="4" transform="rotate(25 27 13)"/><path d="M8 24c0-4 5-10 9-10s9 6 9 10c0 6-6 3-9 3s-9 3-9-3Z"/></svg></button></h1>
+          <h1 id="name" aria-label="Jeme">Jeme<button class="period" type="button" aria-label="Peek inside the dot" aria-haspopup="dialog" aria-controls="pocket-room" disabled><span class="period-dot" aria-hidden="true">.</span><svg class="paw" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><ellipse cx="7" cy="12" rx="3" ry="4" transform="rotate(-25 7 12)"/><ellipse cx="13" cy="7" rx="3" ry="4"/><ellipse cx="21" cy="7" rx="3" ry="4"/><ellipse cx="27" cy="13" rx="3" ry="4" transform="rotate(25 27 13)"/><path d="M8 24c0-4 5-10 9-10s9 6 9 10c0 6-6 3-9 3s-9 3-9-3Z"/></svg></button></h1>
+          <p class="bio">Now you see me.</p>
         </div>
         <div class="avatar">
           <button class="pet" type="button" tabindex="-1" aria-label="Pet em" disabled>
@@ -70,6 +71,7 @@
           <span class="cat-message" role="status" aria-live="polite" aria-atomic="true"></span>
           <svg class="cat-cloud" viewBox="0 0 32 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 19h16a5 5 0 0 0 0-10 8 8 0 0 0-15-2A6 6 0 0 0 8 19Z"/></svg>
           <svg class="cat-snow" viewBox="0 0 100 30" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M15 5v16M8 9l14 8M8 17l14-8M50 1v16M43 5l14 8M43 13l14-8M83 9v16M76 13l14 8M76 21l14-8"/></svg>
+          <svg class="wave-paw" viewBox="0 0 40 48" aria-hidden="true"><path d="M11 44V25C-2 9 7 4 12 19V8C12 0 20 0 20 8v10-12c0-8 8-7 8 0v14c5-12 12-8 9 0l-5 18-2 6Z" fill="var(--paper)" stroke="currentColor" stroke-width="2"/><ellipse cx="22" cy="31" rx="6" ry="7" fill="currentColor"/></svg>
           <span class="cat-sleep" aria-hidden="true">z</span>
           <p class="print-surprise">you put the cat on paper.</p>
         </div>
@@ -96,10 +98,11 @@
             </a>
           </li>
           <li>
-            <div class="discord-row" id="discord-contact">
+            <button class="discord-row" id="discord-contact" type="button" data-username="thejeme" aria-label="Discord: copy username thejeme" title="Copy Discord username" disabled>
               <span class="link-name">Discord</span>
-              <span class="discord-username">thejeme</span>
-            </div>
+              <span class="discord-confirmation" aria-hidden="true"><span class="copy-check">✓</span>Copied</span>
+            </button>
+            <noscript><p class="discord-feedback">Add thejeme as a friend in Discord.</p></noscript>
             <p class="sr-only" id="discord-status" role="status" aria-live="polite"></p>
           </li>
         </ul>
@@ -126,7 +129,7 @@
         <div><dt><code>seasons</code></dt><dd>Try a seasonal theme.</dd></div>
         <div><dt><code>help</code></dt><dd>Come back here.</dd></div>
       </dl>
-      <p class="panel-note">Pet em, linger with your mouse, or double-click the dot. There are surprises after a nap, late at night, on special dates, and even on paper.</p>
+      <p class="panel-note">Pet em, linger with your mouse, or peek inside the dot. Pull the bottom-right corner to see the other side. There are surprises after a nap, late at night, on special dates, and even on paper.</p>
       <button class="panel-button" type="button" id="browse-seasons">Explore seasons <span aria-hidden="true">→</span></button>
     </section>
     <section id="season-guide" aria-label="Season previews" hidden>
@@ -152,6 +155,39 @@
       <button class="panel-button" type="button" id="browse-commands">All secret commands <span aria-hidden="true">→</span></button>
     </section>
     <p class="panel-hint">Escape to close.</p>
+  </dialog>
+  <button class="page-corner" type="button" aria-label="Turn the page over" aria-haspopup="dialog" aria-controls="sketchbook" hidden><span aria-hidden="true">↖</span></button>
+  <div class="corner-peek" aria-hidden="true"><span>there’s<br>another side.</span></div>
+  <dialog class="discovery-panel pocket-room" id="pocket-room" aria-labelledby="room-title">
+    <div class="discovery-header"><h2 id="room-title">A little room.</h2><button class="panel-close" type="button" data-close aria-label="Leave the little room" autofocus>×</button></div>
+    <p class="panel-intro">So this is where em goes.</p>
+    <div class="room-scene">
+      <svg viewBox="0 0 400 320" role="img" aria-label="A quiet room with a moonlit window, a plant, books and em resting on a rug">
+        <defs><pattern id="room-floor" width="55" height="24" patternUnits="userSpaceOnUse"><path d="M0 24h55M28 0v24" fill="none" stroke="currentColor" opacity=".12"/></pattern></defs>
+        <path d="M15 235V20h370v215" fill="var(--hover)" stroke="var(--line)"/>
+        <path d="M15 235h370l15 85H0Z" fill="url(#room-floor)" stroke="var(--line)"/>
+        <rect x="45" y="48" width="100" height="114" rx="48" fill="var(--paper)" stroke="var(--accent)"/>
+        <path d="M95 48v114M45 108h100" stroke="var(--line)"/>
+        <path d="M115 69a14 14 0 1 0 10 23 16 16 0 0 1-10-23" fill="var(--accent)" opacity=".65"/>
+        <path d="M238 128h103M250 128V91h14v37m7 0V82h12v46m8 0 8-43 13 3-8 40" fill="none" stroke="var(--muted)" stroke-width="2"/>
+        <path d="M322 237v-47m0 22q-34-5-23-27 23 2 23 27m0-15q28-3 25-25-23 0-25 25" fill="var(--accent)"/>
+        <path d="m303 228 6 30h28l5-30Z" fill="var(--paper)" stroke="var(--muted)"/>
+        <ellipse cx="175" cy="271" rx="95" ry="26" fill="var(--accent)" opacity=".16"/>
+        <path d="M85 190h42m-38 5h35m-30 5h25" stroke="var(--line)"/>
+      </svg>
+      <button class="room-cat" type="button" aria-label="Say hello to em"><img src="/assets/avatar-blue.webp" width="100" height="100" alt="em" draggable="false"></button>
+    </div>
+    <p class="room-reply" role="status" aria-live="polite">make yourself small. stay a while.</p>
+  </dialog>
+  <dialog class="discovery-panel sketchbook" id="sketchbook" aria-labelledby="sketch-title">
+    <div class="discovery-header"><div><p class="sketch-eyebrow">the other side · no. 001</p><h2 id="sketch-title">Now you see the rest.</h2></div><button class="panel-close" type="button" data-close aria-label="Return to the front" autofocus>×</button></div>
+    <div class="sketch-grid">
+      <section class="sketch-note"><span class="sketch-number">01 / a name, probably</span><p class="name-studies"><s>someone.</s><br><s>thejeme</s><br><strong>Jeme.</strong></p><p class="pencil-note">yes. this one. ↑</p></section>
+      <section class="sketch-note cat-study"><span class="sketch-number">02 / management</span><svg viewBox="0 0 200 160" role="img" aria-label="A pencil sketch of em"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m40 65-5-42 38 24q29-12 55 0l33-25-4 47c31 82-139 91-117-4Z"/><path d="m42 64-3-33 34 22M132 53l23-23-3 36" opacity=".3"/><path d="M66 83h1m65 0h1M94 98l7 4 7-5m-7 5v8m-14-2q7 8 14 2 8 6 15-2M32 97l34 5m-38 11 37-5m70-8 35-9m-34 17 39 2"/></g></svg><p class="pencil-note">the cat insisted on being here.</p></section>
+      <section class="sketch-note"><span class="sketch-number">03 / working notes</span><ul class="sketch-list"><li>keep it small.</li><li>leave room for curiosity.</li><li><s>make it very serious.</s></li><li>hide a room in a dot.</li></ul></section>
+      <section class="sketch-note"><span class="sketch-number">04 / evidence</span><svg class="sketch-tracks" viewBox="0 0 120 140" aria-hidden="true"><defs><g id="ink-paw" fill="currentColor"><ellipse cx="16" cy="23" rx="8" ry="7"/><ellipse cx="5" cy="12" rx="3" ry="5" transform="rotate(-25 5 12)"/><ellipse cx="13" cy="6" rx="3" ry="5"/><ellipse cx="22" cy="7" rx="3" ry="5"/><ellipse cx="29" cy="15" rx="3" ry="5" transform="rotate(25 29 15)"/></g></defs><use href="#ink-paw" x="60" y="5" transform="rotate(15 76 20)"/><use href="#ink-paw" x="24" y="45" transform="rotate(-18 40 60)"/><use href="#ink-paw" x="45" y="92" transform="rotate(10 61 107)"/></svg><p class="pencil-note">wet ink. no regrets.</p></section>
+    </div>
+    <p class="sketch-footer">Some things look better a little unfinished.</p>
   </dialog>
 </body>
 </html>

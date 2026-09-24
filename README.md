@@ -12,7 +12,7 @@ Serve this directory at the root of `https://jeme.app` with HTTPS. Keep `.well-k
 
 The site includes automatic light/dark themes, a web app manifest, app icons, and a service worker that caches the page for offline visits. External profile links still need an internet connection. Installation is offered by supporting browsers; there is no custom install prompt.
 
-Use revalidation (`Cache-Control: no-cache`) for HTML and `sw.js`. When changing cached site files, increment `CACHE` in `sw.js` so a new worker refreshes the offline shell. The updated worker activates after existing site tabs close. Avoid immutable caching for the unversioned CSS, JS, and image filenames.
+Use revalidation (`Cache-Control: no-cache`) for HTML and `sw.js`. When changing cached site files, increment `CACHE` in `sw.js` so a new worker refreshes the offline shell. The updated worker activates immediately after a fresh shell is cached and deletes older `jeme-` caches. Network requests revalidate HTTP caches and fall back to the offline shell on network or server errors. Bump the `?v=` asset URLs in both HTML pages with each release to bypass old HTTP caches even under a previous worker. The Netlify `_headers` file enables revalidation; configure equivalent headers on other hosts.
 
 ## Assets
 
@@ -22,9 +22,9 @@ The supplied `assets/miumau-*.png` files are the avatar originals. The page uses
 
 Click the avatar (or focus it and press Enter/Space) to pet em; every third pet shows “mrrp.” Em gets a small “z” after 60 seconds without activity and wakes on interaction. Blue is the default on ordinary days. Type `miumau` outside a text field to toggle between blue and the neutral/seasonal palette for the current visit. Type `jeme` for “that’s me.” The developer console has a small greeting. All effects are silent, respect reduced motion, and work offline after the first visit.
 
-The Discord row copies `thejeme` through the browser clipboard API. If clipboard access fails, or JavaScript is unavailable, it provides a selectable username. No third-party profile or clipboard service is used.
+The Discord row copies `thejeme` through the browser clipboard API. The button is rendered directly in HTML so no username flashes while scripts load. If clipboard access fails, it shows the username with instructions and allows retrying; without JavaScript, a static instruction is shown. Text selection is disabled site-wide. No third-party profile or clipboard service is used.
 
-More discoveries: `pspsps` wakes em with “?”, `hello` gets “hi.”, and `bye` gets “bye.” Between midnight and 5 a.m. in the visitor’s local time, each pet has a 25% chance of getting “still awake?”. Double-click the name’s dot (or focus it and press Enter/Space) for a brief paw print. Printing reveals “you put the cat on paper.” beneath em.
+More discoveries: `pspsps` wakes em with “?”, `hello` gets “hi.”, and `bye` gets “bye.” Between midnight and 5 a.m. in the visitor’s local time, each pet has a 25% chance of getting “still awake?”. Click the name’s dot (or focus it and press Enter/Space) to open em’s little room. During Easter, the first click still discovers the egg; the next opens the room. Printing reveals “you put the cat on paper.” beneath em.
 
 Type `fetch` to let em borrow the dot (“mine.”), `purr` for “prrr.”, `rain` for a tiny cloud and “…”, `sit` for “no.”, or `?` for “?”. `uemaim` (or `uamuim`, the actual reverse of `miumau`) briefly mirrors em. Hover with a mouse for four seconds without petting for “yes?”. Returning after the tab has been hidden for at least five minutes gets “oh. you.” Temporary visual effects reset after 2.4 seconds without changing layout.
 
@@ -47,3 +47,7 @@ Preview with `/?season=christmas`, `/?season=birthday`, `/?season=easter`, `/?se
 On the homepage, the birthday ornament is a candle you can blow out (“wish made.”), and the Christmas ornament opens into a fish (“for me?”). During Easter, find the patterned egg hidden in the name’s dot (“found it.”). All three work with pointer or keyboard activation. Discoveries persist for the current browser tab’s session, separately for each year; if storage is unavailable, they last until reload. The 404 page keeps decorative ornaments.
 
 Type `help` to open a compact command guide or `seasons` to open the seasonal picker. Native dialogs support keyboard focus, a close button, and Escape. Choosing a season updates the preview URL without reloading. “Today’s theme” removes the override and follows the local date again; “Everyday” explicitly turns seasonal styling off. Selecting a season restores its neutral avatar and seasonal colors. “Today’s theme” and “Everyday” restore blue on ordinary days.
+
+## Hidden places
+
+The period opens a tiny illustrated room. Click em inside for a quiet reply. Pull the bottom-right page corner inward to reveal a sketchbook with name studies, a cat drawing, notes, and paw prints. A tap or keyboard activation opens it too; short drags and cancelled gestures return the corner to rest. Both places use native dialogs with close buttons and Escape support. Opening an external profile link makes em wave without delaying or intercepting navigation. Reduced motion shows a still raised paw. All three features use local assets and work offline.
